@@ -2,8 +2,8 @@
   "name": "Rongtao Zhang",
   "short_name": "Rongtao Zhang",
   "lang": "en-us",
-  "theme_color": "#849098",
-  "background_color": "#849098",
+  "theme_color": "rgb(14, 105, 157)",
+  "background_color": "rgb(14, 105, 157)",
   "icons": [{
     "src": "/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_192x192_fill_lanczos_center_3.png",
     "sizes": "192x192",
