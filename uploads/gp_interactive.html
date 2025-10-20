@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gaussian Processes · Interactive Demo (Pure Frontend)</title>
+  <meta name="description" content="Pure frontend interactive Gaussian process demo: kernels, prior sampling, regression posterior (click to add points), and uncertainty." />
+  <style>
+    :root {
+      --bg:#ffffff; --panel:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb;
+      --accent:#2563eb; --green:#16a34a; --orange:#f59e0b; --red:#ef4444;
+    }
+    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft Yahei",sans-serif; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:20px; }
+    h1{ margin:0 0 6px; font-size:26px; }
+    .sub{ color:var(--muted); font-size:14px; margin-bottom:12px; }
+    .grid{ display:grid; grid-template-columns: 320px 1fr; gap:14px; align-items:start; }
+    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
+    .panel{ background:var(--panel); border:1px solid var(--line); border-radius:12px; }
+    .controls{ padding:14px; position: sticky; top: 10px; }
+    .controls .g { margin-bottom:10px; }
+    .controls label{ display:block; color:var(--muted); font-size:12px; margin-bottom:4px; }
+    .controls input[type=number], .controls select{ width:100%; background:#ffffff; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:6px 8px; }
+    .row{ display:grid; grid-template-columns: 1fr 92px; gap:8px; align-items:center; }
+    .btn{ display:inline-flex; justify-content:center; align-items:center; gap:6px; width:100%; padding:9px 10px; border-radius:10px; border:1px solid var(--line); background:#f3f4f6; color:#1f2937; cursor:pointer; }
+    .btn:hover{ background:#e5e7eb; }
+    .btn.primary{ background:#eff6ff; border-color:#dbeafe; color:#1e40af; }
+    .btn.primary:hover{ background:#dbeafe; }
+    .btn.warn{ background:#fee2e2; border-color:#fecaca; color:#991b1b; }
+    .btn.warn:hover{ background:#fecaca; }
+    .plot { padding:12px; }
+    .legend{ display:flex; gap:12px; flex-wrap:wrap; color:var(--muted); font-size:12px; padding:8px 12px; border-top:1px solid var(--line); }
+    .legend .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; }
+    .note{ color:var(--muted); font-size:12px; padding:8px 12px 14px; }
+    /* Ensure the canvas always has an explicit size for IDE previews */
+    #cv { width:100%; height:520px; display:block; }
+    #cv_cls { width:100%; height:420px; display:block; }
+    #cv_cls_f { width:100%; height:340px; display:block; }
+    #cv_pdf { width:100%; height:300px; display:block; }
+    #cv_cdf { width:100%; height:300px; display:block; }
+    .eq { padding:8px 12px; background:#ffffff; border:1px dashed var(--line); border-radius:8px; color:var(--text); font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; font-size:13px; }
+    .mj { font-family: inherit; }
+    .chips { display:inline-flex; gap:6px; flex-wrap:wrap; margin-left:8px; }
+    .chip { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; border-radius:999px; border:1px solid var(--line); background:#f3f4f6; color:var(--text); font-size:12px; }
+    .chip code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; background:transparent; border:none; padding:0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="panel" style="margin-bottom:14px; padding:14px;">
+      <h2 style="margin:0 0 8px; font-size:20px;">Warm-up: Normal Distribution PDF and CDF</h2>
+      <div class="grid" style="margin-top:6px;">
+        <aside class="panel controls">
+          <div class="g">
+            <div class="row"><label for="norm_mu">Mean \(\mu\)</label><input id="norm_mu" type="number" step="0.1" value="0.0"></div>
+            <div class="row"><label for="norm_sigma">Standard deviation \(\sigma\)</label><input id="norm_sigma" type="number" step="0.1" min="0.05" value="1.0"></div>
+            <div class="row"><label for="norm_ngrids">Resolution (points)</label><input id="norm_ngrids" type="number" step="50" min="100" max="1000" value="400"></div>
+          </div>
+          <div class="g">
+            <label>Cursor (linked shading/readout)</label>
+            <div class="row"><label for="norm_xnum">Cursor \(x\)</label><input id="norm_xnum" type="number" step="0.1" value="0.0"></div>
+            <button class="btn" id="norm_center">Set to \(\mu\)</button>
+          </div>
+          <div class="g">
+            <label>Show</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#374151; margin:4px 0;"><input type="checkbox" id="norm_show_pdf" checked> PDF density curve \(f(x)\)</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#374151;"><input type="checkbox" id="norm_show_cdf" checked> CDF \(\Phi(x)\)</label>
+          </div>
+          <div class="g">
+            <button class="btn primary" id="norm_update">Update</button>
+          </div>
+        </aside>
+        <section class="panel">
+          <div class="plot"><canvas id="cv_pdf"></canvas></div>
+          <div class="plot" style="margin-top:6px;"><canvas id="cv_cdf"></canvas></div>
+          <div class="legend">
+            <div><span class="dot" style="background:#2563eb"></span>PDF \(f(x)\): blue curve; blue shaded area = \(\Phi(x)\)</div>
+            <div><span class="dot" style="background:#16a34a"></span>CDF \(\Phi(x)\): green curve; marker shows \(\Phi(x)\)</div>
+          </div>
+          <div class="note">Tip: Click on either plot to set cursor \(x\). Range: \(x\in[\mu-4\sigma,\,\mu+4\sigma]\).</div>
+        </section>
+      </div>
+      <div class="eq" style="margin-top:10px;">
+        $$
+          f(x) = \frac{1}{\sqrt{2\pi}\,\sigma}\,\exp\!\Big( -\frac{(x-\mu)^2}{2\sigma^2} \Big),\qquad
+          \Phi(x) = \int_{-\infty}^{x} f(t)\,\mathrm{d}t
+        $$
+        <div style="margin-top:6px; color:#374151;">Current: \(\mu\)=<span data-param="norm_mu">0.0</span>, \(\sigma\)=<span data-param="norm_sigma">1.0</span>; \(x\)=<span data-param="norm_x">0.0</span>, \(\Phi(x)\)=<span data-param="norm_cdfx">0.5</span></div>
+      </div>
+    </section>
+
+    <h1>Part 1: Gaussian Processes · Interactive Demo</h1>
+    <div class="sub">Left-click to add points, right-click to remove nearest; supports prior sampling and regression posterior</div>
+    <div class="grid">
+      <aside class="panel controls">
+        <div class="g">
+          <label for="mode">Mode</label>
+          <select id="mode">
+            <option value="posterior" selected>Regression posterior</option>
+            <option value="prior">Prior sampling</option>
+          </select>
+        </div>
+        <div class="g">
+          <label for="kernel">Kernel</label>
+          <select id="kernel">
+            <option value="rbf" selected>RBF / Gaussian</option>
+            <option value="matern32">Matérn 3/2</option>
+            <option value="periodic">Periodic</option>
+            <option value="linear">Linear</option>
+          </select>
+        </div>
+        <div class="g">
+          <div class="row">
+            <label for="sigma_f">Signal amplitude σ_f</label>
+            <input id="sigma_f" type="number" step="0.1" min="0.05" max="10" value="1.0" />
+          </div>
+          <div class="row">
+            <label for="ell">Length-scale ℓ</label>
+            <input id="ell" type="number" step="0.1" min="0.05" max="10" value="1.2" />
+          </div>
+          <div class="row" id="row-period" style="display:none;">
+            <label for="period">Period p</label>
+            <input id="period" type="number" step="0.1" min="0.1" max="20" value="3.0" />
+          </div>
+          <div class="row" id="row-sigma_b" style="display:none;">
+            <label for="sigma_b">Bias amplitude σ_b</label>
+            <input id="sigma_b" type="number" step="0.1" min="0" max="10" value="0.1" />
+          </div>
+        </div>
+        <div class="g" id="g-post">
+          <div class="row">
+            <label for="sigma_n">Observation noise σ_n</label>
+            <input id="sigma_n" type="number" step="0.05" min="0" max="2" value="0.15" />
+          </div>
+        </div>
+        <div class="g">
+          <div class="row">
+            <label for="nsamples">Number of prior samples</label>
+            <input id="nsamples" type="number" step="1" min="1" max="8" value="3" />
+          </div>
+          <div class="row">
+            <label for="ngrids">Plot resolution (points)</label>
+            <input id="ngrids" type="number" step="50" min="60" max="600" value="200" />
+          </div>
+        </div>
+        <div class="g">
+          <button class="btn primary" id="btn-update">Sample / Update</button>
+        </div>
+        <div class="g" id="g-actions">
+          <button class="btn" id="btn-add">Add random observation</button>
+          <div style="height:6px"></div>
+          <button class="btn warn" id="btn-clear">Clear points</button>
+        </div>
+        <div class="g" id="g-prior-opts" style="display:none;">
+          <label>Prior overlay</label>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#d7e2ef;">
+              <input type="checkbox" id="show_prior_mean" /> Show prior mean 0 line
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#d7e2ef;">
+              <input type="checkbox" id="show_prior_band" /> Show prior ±2σ band
+            </label>
+          </div>
+        </div>
+        <div class="note">Tip: Left-click to add a point, right-click to remove nearest; if preview does not render, open this page in a system browser.</div>
+      </aside>
+      <section class="panel">
+        <div class="plot">
+          <canvas id="cv"></canvas>
+        </div>
+        <div class="legend">
+          <div><span class="dot" style="background:#61dafb"></span>Prior samples</div>
+          <div><span class="dot" style="background:#57d39b"></span>Posterior mean</div>
+          <div><span class="dot" style="background:#ffb86b"></span>±2σ credible band</div>
+          <div><span class="dot" style="background:#ff6b6b"></span>Observations</div>
+        </div>
+        <div class="note">Default range x ∈ [-5, 5]; y-axis auto-adjusts to curves and bands.</div>
+      </section>
+    </div>
+    
+    <section class="panel" style="margin-top:14px; padding:14px;">
+      <h3 style="margin:0 0 8px; font-size:18px;">Gaussian Processes: Formulas and Notes</h3>
+      <p style="margin:6px 0 8px; color:#d7e2ef;">For any finite input set, prior and regression posterior:</p>
+      <div class="eq" style="margin:6px 0;">$$ f(\mathbf{X}) \sim \mathcal{N}\big(m(\mathbf{X}),\, K(\mathbf{X},\mathbf{X})\big) $$</div>
+      <div class="eq" style="margin:6px 0;">$$
+        \begin{aligned}
+          \mu(\mathbf{X}_*) &= K(\mathbf{X}_*,\mathbf{X})\,\big[K(\mathbf{X},\mathbf{X})+\sigma_n^2 I\big]^{-1}\,\mathbf{y}\\
+          \Sigma(\mathbf{X}_*) &= K(\mathbf{X}_*,\mathbf{X}_*) - K(\mathbf{X}_*,\mathbf{X})\,\big[K(\mathbf{X},\mathbf{X})+\sigma_n^2 I\big]^{-1}\,K(\mathbf{X},\mathbf{X}_*)
+        \end{aligned}
+      $$
+      </div>
+      <div style="margin:4px 0 10px; color:#d7e2ef;">
+        <span style="margin-right:8px;">Parameters</span>
+        <span class="chips"><span class="chip"><span class="mj">\(\sigma_n\)</span>=<span data-param="sigma_n">0.15</span></span></span>
+      </div>
+      <p style="margin:10px 0 6px; color:#374151;">Common kernels (matrix elements \(K_{ij} = k(x_i, x_j)\):</p>
+      <ul style="margin:6px 0 0 18px; color:#374151; line-height:1.8;">
+        <li>RBF/Gaussian:
+          <span class="mj">\( k(x,x') = \sigma_f^2\,\exp\!\big( -\tfrac{(x-x')^2}{2\,\ell^2} \big) \)</span>
+          <span class="chips">
+            <span class="chip"><span class="mj">\(\sigma_f\)</span>=<span data-param="sigma_f">1.0</span></span>
+            <span class="chip"><span class="mj">\(\ell\)</span>=<span data-param="ell">1.2</span></span>
+          </span>
+        </li>
+        <li>Matérn 3/2:
+          <span class="mj">\( k = \sigma_f^2\,\big(1 + \tfrac{\sqrt{3}\,r}{\ell}\big)\,\exp\!\big(-\tfrac{\sqrt{3}\,r}{\ell}\big),\; r=|x-x'| \)</span>
+          <span class="chips">
+            <span class="chip"><span class="mj">\(\sigma_f\)</span>=<span data-param="sigma_f">1.0</span></span>
+            <span class="chip"><span class="mj">\(\ell\)</span>=<span data-param="ell">1.2</span></span>
+          </span>
+        </li>
+        <li>Periodic:
+          <span class="mj">\( k = \sigma_f^2\,\exp\!\big( -\tfrac{2\,\sin^2(\pi|x-x'|/p)}{\ell^2} \big) \)</span>
+          <span class="chips">
+            <span class="chip"><span class="mj">\(\sigma_f\)</span>=<span data-param="sigma_f">1.0</span></span>
+            <span class="chip"><span class="mj">\(\ell\)</span>=<span data-param="ell">1.2</span></span>
+            <span class="chip"><span class="mj">\(p\)</span>=<span data-param="period">3.0</span></span>
+          </span>
+        </li>
+        <li>Linear:
+          <span class="mj">\( k = \sigma_b^2 + \sigma_f^2\,x\,x' \)</span>
+          <span class="chips">
+            <span class="chip"><span class="mj">\(\sigma_f\)</span>=<span data-param="sigma_f">1.0</span></span>
+            <span class="chip"><span class="mj">\(\sigma_b\)</span>=<span data-param="sigma_b">0.1</span></span>
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Probit Likelihood (Classification) -->
+    <section class="panel" style="margin-top:14px; padding:14px;">
+      <h2 style="margin:0 0 8px; font-size:20px;">Part 2: Probit Likelihood (Classification)</h2>
+      <p style="margin:6px 0 8px; color:#374151;">Probit maps latent real \(f\) to a binary class probability via the standard normal CDF \(\Phi(\cdot)\):</p>
+      <div class="eq" style="margin:6px 0;">$$ p(y=1\mid f)=\Phi(f),\qquad p(y=0\mid f)=1-\Phi(f) $$</div>
+      <p style="margin:6px 0 8px; color:#374151;">Equivalent form (recode labels as \(t=2y-1\in\{-1,+1\}\)):</p>
+      <div class="eq" style="margin:6px 0;">$$ p(t\mid f)=\Phi(tf) $$</div>
+      <p style="margin:10px 0 6px; color:#374151;">Key concepts:</p>
+      <ul style="margin:6px 0 0 18px; color:#374151; line-height:1.8;">
+        <li><b>Link function:</b> \(\Phi(z)\) is the standard normal CDF, monotonic S-shaped, mapping reals to \([0,1]\).</li>
+        <li><b>Latent function:</b> \(f(x)\) indicates signed distance/confidence to the decision boundary; \(f\!>\!0\) favors \(y=1\); larger \(|f|\) means higher confidence.</li>
+        <li><b>Decision boundary:</b> \(p(y=1\mid f)=0.5\) corresponds to \(f=0\).</li>
+        <li><b>Relation to kernels:</b> Kernels impose prior smooth/periodic/linear structure on \(f\), shaping how classification probability varies with \(x\).</li>
+      </ul>
+      <div class="eq" style="margin:10px 0;">$$ z = f + \varepsilon,\; \varepsilon\sim\mathcal{N}(0,1),\quad y=\mathbf{1}[z>0] \Rightarrow p(y=1\mid f)=\Phi(f) $$</div>
+      <p style="margin:6px 0 12px; color:#374151;">Interactive Probit demo: place 0/1 labels, adjust kernel and hyperparameters, and see \(p(y=1\mid x)\) update in real time.</p>
+
+      <div class="grid">
+        <aside class="panel controls">
+          <div class="g"><label>Kernel</label>
+            <select id="cls-kernel">
+              <option value="rbf" selected>RBF / Gaussian</option>
+              <option value="matern32">Matérn 3/2</option>
+              <option value="periodic">Periodic</option>
+              <option value="linear">Linear</option>
+            </select>
+          </div>
+          <div class="g">
+            <div class="row"><label for="cls_sigma_f">Signal amplitude \(\sigma_f\)</label><input id="cls_sigma_f" type="number" step="0.1" min="0.05" max="10" value="1.0"></div>
+            <div class="row"><label for="cls_ell">Length-scale \(\ell\)</label><input id="cls_ell" type="number" step="0.1" min="0.05" max="10" value="1.2"></div>
+            <div class="row" id="cls_row_period" style="display:none;"><label for="cls_period">Period \(p\)</label><input id="cls_period" type="number" step="0.1" min="0.1" max="20" value="3.0"></div>
+            <div class="row" id="cls_row_sigma_b" style="display:none;"><label for="cls_sigma_b">Bias amplitude \(\sigma_b\)</label><input id="cls_sigma_b" type="number" step="0.1" min="0" max="10" value="0.1"></div>
+            <div class="row"><label for="cls_ngrids">Plot resolution (points)</label><input id="cls_ngrids" type="number" step="50" min="60" max="600" value="200"></div>
+          </div>
+          <div class="g">
+            <label>Add label</label>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="cls_label" id="cls_label1" value="1" checked> y=1</label>
+              <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="cls_label" id="cls_label0" value="0"> y=0</label>
+            </div>
+          </div>
+          <div class="g">
+            <button class="btn primary" id="cls_update">Update / Fit</button>
+          </div>
+          <div class="g">
+            <button class="btn" id="cls_addrand">Add random sample</button>
+            <div style="height:6px;"></div>
+            <button class="btn warn" id="cls_clear">Clear points</button>
+          </div>
+          <div class="g" id="cls_f_opts">
+            <label>Latent f display</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#374151; margin:4px 0;">
+              <input type="checkbox" id="cls_show_mean" /> Show mean of f
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#374151;">
+              <input type="checkbox" id="cls_show_band" /> Show ±2σ band of f
+            </label>
+          </div>
+          <div class="note">Interaction: Left-click to add a point (using selected label), right-click to remove nearest.
+        </aside>
+        <section class="panel">
+          <div class="plot">
+            <canvas id="cv_cls"></canvas>
+          </div>
+          <div class="legend">
+            <div><span class="dot" style="background:#16a34a"></span>Probability curve \(p(y=1\mid x)\)</div>
+            <div><span class="dot" style="background:#ef4444"></span>y=1 samples</div>
+            <div><span class="dot" style="background:#3b82f6"></span>y=0 samples</div>
+          </div>
+          <div class="note">Threshold view: \(z=f+\varepsilon,\ \varepsilon\sim\mathcal{N}(0,1),\ y=\mathbf{1}[z>0]\Rightarrow p(y=1\mid f)=\Phi(f)\). Bernoulli view: \(y\mid f\sim\mathrm{Bernoulli}(\Phi(f))\).</div>
+
+          <div class="plot" id="cv_cls_f_wrap" style="display:none;">
+            <canvas id="cv_cls_f"></canvas>
+          </div>
+          <div class="legend" id="cv_cls_f_legend" style="display:none;">
+            <div><span class="dot" style="background:#16a34a"></span>Mean of latent f</div>
+            <div><span class="dot" style="background:#f59e0b"></span>±2σ band of latent f</div>
+          </div>
+          <div class="note" id="cv_cls_f_note" style="display:none;">Shows the Laplace-approximate posterior mean and uncertainty of latent \(f\), independent of the probability scale above.</div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <script>
+    // ----- Math & GP -----
+    // ===== Warm-up: Normal PDF/CDF (interactive) =====
+    const state_norm = { mu:0.0, sigma:1.0, ngrids:400, Xs:[], showPdf:true, showCdf:true, x:0.0 };
+    function readNormUI(){ state_norm.mu = parseFloat($id('norm_mu').value); state_norm.sigma = Math.max(0.05, parseFloat($id('norm_sigma').value)); state_norm.ngrids = Math.max(100, Math.min(1000, parseInt($id('norm_ngrids').value||'400',10))); state_norm.showPdf = $id('norm_show_pdf').checked; state_norm.showCdf = $id('norm_show_cdf').checked; state_norm.x = parseFloat($id('norm_xnum').value); }
+    function normPdfMS(x, mu, sigma){ const z=(x-mu)/sigma; return Math.exp(-0.5*z*z)/(Math.sqrt(2*Math.PI)*sigma); }
+    function normCdfMS(x, mu, sigma){ return normCdf((x-mu)/sigma); }
+    function updateNormChips(){ document.querySelectorAll('[data-param="norm_mu"]').forEach(e=> e.textContent = state_norm.mu.toString()); document.querySelectorAll('[data-param="norm_sigma"]').forEach(e=> e.textContent = state_norm.sigma.toString()); document.querySelectorAll('[data-param="norm_x"]').forEach(e=> e.textContent = state_norm.x.toString()); const c = normCdfMS(state_norm.x, state_norm.mu, state_norm.sigma); document.querySelectorAll('[data-param="norm_cdfx"]').forEach(e=> e.textContent = c.toFixed(4)); }
+    function drawNormalPdf(canvas, Xs, pdf, mu, sigma, x){ const ctx=canvas.getContext('2d'); const rect=canvas.getBoundingClientRect(); const W=rect.width||canvas.clientWidth||1000, H=rect.height||canvas.clientHeight||300; const dpr=window.devicePixelRatio||1; canvas.width=Math.floor(W*dpr); canvas.height=Math.floor(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+      const margin={left:50,right:12,top:16,bottom:36}; const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom; ctx.clearRect(0,0,W,H); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+      const xmin=Xs[0], xmax=Xs[Xs.length-1]; let ymax=0; for(let i=0;i<pdf.length;i++) if(pdf[i]>ymax) ymax=pdf[i]; ymax=Math.max(1e-6,ymax); const x2px=z=>margin.left+(z-xmin)/(xmax-xmin)*innerW; const y2px=y=>margin.top+(1-(y)/ymax)*innerH;
+      // grid
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.beginPath(); for(let gx=0;gx<=10;gx++){ const xx=margin.left+innerW*(gx/10); ctx.moveTo(xx,margin.top); ctx.lineTo(xx,margin.top+innerH);} for(let gy=0;gy<=4;gy++){ const yy=margin.top+innerH*(gy/4); ctx.moveTo(margin.left,yy); ctx.lineTo(margin.left+innerW,yy);} ctx.stroke();
+      // axes
+      ctx.fillStyle='#6b7280'; ctx.font='12px system-ui, -apple-system, Segoe UI, Roboto'; ctx.textAlign='center'; ctx.fillText('x', margin.left+innerW/2, H-10); ctx.save(); ctx.translate(16, margin.top+innerH/2); ctx.rotate(-Math.PI/2); ctx.fillText('pdf f(x)', 0, 0); ctx.restore();
+      // shaded area: from xmin to x
+      const xclamp=Math.min(xmax, Math.max(xmin, x));
+      const idxEnd = Math.max(0, Math.min(Xs.length-1, Math.floor((xclamp - xmin)/(xmax - xmin)*(Xs.length-1))));
+      ctx.fillStyle='rgba(59,130,246,0.22)'; ctx.beginPath(); ctx.moveTo(x2px(xmin), y2px(0)); for(let i=0;i<=idxEnd;i++){ const xx=x2px(Xs[i]); const yy=y2px(pdf[i]); ctx.lineTo(xx,yy);} ctx.lineTo(x2px(Xs[idxEnd]), y2px(0)); ctx.closePath(); ctx.fill();
+      // pdf curve
+      if(state_norm.showPdf){ ctx.strokeStyle='#2563eb'; ctx.lineWidth=2; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const xx=x2px(Xs[i]); const yy=y2px(pdf[i]); if(i===0) ctx.moveTo(xx,yy); else ctx.lineTo(xx,yy);} ctx.stroke(); }
+      // cursor
+      ctx.setLineDash([5,4]); ctx.strokeStyle='#9ca3af'; ctx.beginPath(); ctx.moveTo(x2px(xclamp), margin.top); ctx.lineTo(x2px(xclamp), margin.top+innerH); ctx.stroke(); ctx.setLineDash([]);
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1.5; ctx.strokeRect(margin.left, margin.top, innerW, innerH);
+    }
+    function drawNormalCdf(canvas, Xs, cdf, mu, sigma, x){ const ctx=canvas.getContext('2d'); const rect=canvas.getBoundingClientRect(); const W=rect.width||canvas.clientWidth||1000, H=rect.height||canvas.clientHeight||300; const dpr=window.devicePixelRatio||1; canvas.width=Math.floor(W*dpr); canvas.height=Math.floor(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+      const margin={left:50,right:12,top:16,bottom:36}; const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom; ctx.clearRect(0,0,W,H); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+      const xmin=Xs[0], xmax=Xs[Xs.length-1]; const x2px=z=>margin.left+(z-xmin)/(xmax-xmin)*innerW; const y2px=q=>margin.top+(1-q)*innerH; const xclamp=Math.min(xmax, Math.max(xmin, x));
+      // grid
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.beginPath(); for(let gx=0;gx<=10;gx++){ const xx=margin.left+innerW*(gx/10); ctx.moveTo(xx,margin.top); ctx.lineTo(xx,margin.top+innerH);} for(let gy=0;gy<=4;gy++){ const yy=margin.top+innerH*(gy/4); ctx.moveTo(margin.left,yy); ctx.lineTo(margin.left+innerW,yy);} ctx.stroke();
+      // axes
+      ctx.fillStyle='#6b7280'; ctx.font='12px system-ui, -apple-system, Segoe UI, Roboto'; ctx.textAlign='center'; ctx.fillText('x', margin.left+innerW/2, H-10); ctx.save(); ctx.translate(16, margin.top+innerH/2); ctx.rotate(-Math.PI/2); ctx.fillText('cdf Φ(x)', 0, 0); ctx.restore();
+      // cdf curve
+      if(state_norm.showCdf){ ctx.strokeStyle='#16a34a'; ctx.lineWidth=2; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const xx=x2px(Xs[i]); const yy=y2px(cdf[i]); if(i===0) ctx.moveTo(xx,yy); else ctx.lineTo(xx,yy);} ctx.stroke(); }
+      // marker
+      const cval = normCdfMS(xclamp, mu, sigma);
+      ctx.setLineDash([5,4]); ctx.strokeStyle='#9ca3af'; ctx.beginPath(); ctx.moveTo(x2px(xclamp), margin.top); ctx.lineTo(x2px(xclamp), margin.top+innerH); ctx.moveTo(margin.left, y2px(cval)); ctx.lineTo(margin.left+innerW, y2px(cval)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#16a34a'; ctx.beginPath(); ctx.arc(x2px(xclamp), y2px(cval), 3, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1.5; ctx.strokeRect(margin.left, margin.top, innerW, innerH);
+    }
+    function recomputeNorm(){ const cvp=$id('cv_pdf'), cvc=$id('cv_cdf'); readNormUI(); const mu=state_norm.mu, s=Math.max(0.05, state_norm.sigma); const xmin = mu - 4*s, xmax = mu + 4*s; if(isNaN(state_norm.x)) state_norm.x = mu; state_norm.x = Math.max(xmin, Math.min(xmax, state_norm.x)); $id('norm_xnum').value = state_norm.x.toFixed(2); state_norm.Xs = linspace(xmin, xmax, state_norm.ngrids); const pdf=new Float64Array(state_norm.Xs.length), cdf=new Float64Array(state_norm.Xs.length); for(let i=0;i<state_norm.Xs.length;i++){ const x=state_norm.Xs[i]; pdf[i]=normPdfMS(x, mu, s); cdf[i]=normCdfMS(x, mu, s);} drawNormalPdf(cvp, state_norm.Xs, pdf, mu, s, state_norm.x); drawNormalCdf(cvc, state_norm.Xs, cdf, mu, s, state_norm.x); updateNormChips(); if(window.MathJax && window.MathJax.typesetPromise){ window.MathJax.typesetPromise(); } }
+    function setupNorm(){ ['norm_mu','norm_sigma','norm_ngrids','norm_show_pdf','norm_show_cdf','norm_xnum'].forEach(id=> $id(id).addEventListener('input', ()=>recomputeNorm())); $id('norm_update').addEventListener('click', ()=>recomputeNorm()); $id('norm_center').addEventListener('click', ()=>{ $id('norm_xnum').value = $id('norm_mu').value; recomputeNorm(); }); const setXFromClick = (canvas, ev)=>{ const rect=canvas.getBoundingClientRect(); const W=rect.width; const margin={left:50,right:12,top:16,bottom:36}; const innerW=W-margin.left-margin.right; const mu=parseFloat($id('norm_mu').value); const s=Math.max(0.05, parseFloat($id('norm_sigma').value)); const xmin=mu-4*s, xmax=mu+4*s; const xPix=ev.clientX-rect.left; const x = xmin + (xPix - margin.left)/innerW*(xmax-xmin); $id('norm_xnum').value = (Math.max(xmin, Math.min(xmax, x))).toFixed(2); recomputeNorm(); }; ['cv_pdf','cv_cdf'].forEach(id=>{ const c=$id(id); c.addEventListener('mousedown', e=>{ if(e.button===0) setXFromClick(c,e); }); c.addEventListener('contextmenu', e=>e.preventDefault()); }); window.addEventListener('resize', ()=>recomputeNorm()); }
+    const state = {
+      mode: 'posterior', kernel: 'rbf',
+      params: { sigma_f: 1.0, ell: 1.2, period: 3.0, sigma_b: 0.1 },
+      sigma_n: 0.15, nsamples: 3, ngrids: 200, xrange: [-5, 5],
+      Xs: [], points: [], lastYR: {ymin:-1, ymax:1},
+      showPriorMean: false, showPriorBand: false,
+      priorLines: [], lastPriorKey: ''
+    };
+
+    function linspace(a,b,n){ const xs=new Array(n); const s=(b-a)/(n-1); for(let i=0;i<n;i++) xs[i]=a+s*i; return xs; }
+    function zeros(n,m){ const A=new Array(n); for(let i=0;i<n;i++) A[i]=new Float64Array(m); return A; }
+
+    function kRBF(x,y,p){ const r=(x-y)/p.ell; return p.sigma_f*p.sigma_f*Math.exp(-0.5*r*r); }
+    function kM32(x,y,p){ const r=Math.abs(x-y); const s=Math.sqrt(3)*r/p.ell; return p.sigma_f*p.sigma_f*(1+s)*Math.exp(-s); }
+    function kPer(x,y,p){ const s=Math.sin(Math.PI*Math.abs(x-y)/p.period); return p.sigma_f*p.sigma_f*Math.exp(-2*(s*s)/(p.ell*p.ell)); }
+    function kLin(x,y,p){ return p.sigma_b*p.sigma_b + p.sigma_f*p.sigma_f*(x*y); }
+    function kSel(name){ return name==='rbf'?kRBF: name==='matern32'?kM32: name==='periodic'?kPer: kLin; }
+
+    function cholesky(A){ const n=A.length; const L=zeros(n,n);
+      for(let i=0;i<n;i++){
+        for(let j=0;j<=i;j++){
+          let s=0; for(let k=0;k<j;k++) s+=L[i][k]*L[j][k];
+          if(i===j){ const v=A[i][i]-s; if(v<=0) return null; L[i][j]=Math.sqrt(v); }
+          else{ L[i][j]=(A[i][j]-s)/L[j][j]; }
+        }
+      } return L; }
+    function solveLower(L,b){ const n=L.length, y=new Float64Array(n); for(let i=0;i<n;i++){ let s=0; for(let k=0;k<i;k++) s+=L[i][k]*y[k]; y[i]=(b[i]-s)/L[i][i]; } return y; }
+    function solveUpper(L,y){ const n=L.length, x=new Float64Array(n); for(let i=n-1;i>=0;i--){ let s=0; for(let k=i+1;k<n;k++) s+=L[k][i]*x[k]; x[i]=(y[i]-s)/L[i][i]; } return x; }
+    function gram(xs,k,p,noise=0){ const n=xs.length, K=zeros(n,n); for(let i=0;i<n;i++){ for(let j=0;j<=i;j++){ const v=k(xs[i],xs[j],p); K[i][j]=v; K[j][i]=v; } K[i][i]+=noise; } return K; }
+    function cross(xs,zs,k,p){ const n=xs.length,m=zs.length, K=zeros(n,m); for(let i=0;i<n;i++){ for(let j=0;j<m;j++) K[i][j]=k(xs[i],zs[j],p);} return K; }
+    function addJ(K,eps=1e-6){ for(let i=0;i<K.length;i++) K[i][i]+=eps; return K; }
+
+    function randn(){ const u1=Math.random(), u2=Math.random(); return Math.sqrt(-2*Math.log(u1+1e-12))*Math.cos(2*Math.PI*u2); }
+    function priorSamples(Xs,k,p,ns){ const K=addJ(gram(Xs,k,p,0),1e-6); let L=cholesky(K)||cholesky(addJ(K,1e-4)); const n=Xs.length; const S=[]; for(let s=0;s<ns;s++){ const z=new Float64Array(n); for(let i=0;i<n;i++) z[i]=randn(); const f=new Float64Array(n); for(let i=0;i<n;i++){ let sum=0; for(let t=0;t<=i;t++) sum+=L[i][t]*z[t]; f[i]=sum; } S.push(f);} return S; }
+    function posterior(xtr,ytr,Xs,k,p,sn){ if(!xtr.length){ const mean=new Float64Array(Xs.length).fill(0); const std=new Float64Array(Xs.length); for(let i=0;i<Xs.length;i++){ const v=k(Xs[i],Xs[i],p); std[i]=Math.sqrt(Math.max(1e-12,v)); } return {mean,std}; }
+      const K=addJ(gram(xtr,k,p,sn*sn),1e-6); let L=cholesky(K)||cholesky(addJ(K,1e-4)); const Ks=cross(xtr,Xs,k,p); const yv=Float64Array.from(ytr); const alpha=solveUpper(L,solveLower(L,yv));
+      const m=Xs.length,n=xtr.length; const mean=new Float64Array(m); for(let j=0;j<m;j++){ let s=0; for(let i=0;i<n;i++) s+=Ks[i][j]*alpha[i]; mean[j]=s; }
+      const v=zeros(n,m); for(let j=0;j<m;j++){ for(let i=0;i<n;i++){ let s=Ks[i][j]; for(let t=0;t<i;t++) s-=L[i][t]*v[t][j]; v[i][j]=s/L[i][i]; } }
+      const std=new Float64Array(m); for(let j=0;j<m;j++){ let vv=0; for(let i=0;i<n;i++) vv+=v[i][j]*v[i][j]; const kss=k(Xs[j],Xs[j],p); std[j]=Math.sqrt(Math.max(1e-12,kss-vv)); } return {mean,std}; }
+
+    function trueF(x){ return Math.sin(x) + 0.5*Math.cos(0.7*x); }
+
+    // ----- Plot -----
+    function getYRange(lines,pts,band,overlay){ let ymin=Infinity,ymax=-Infinity; if(lines){ for(const l of lines){ for(let i=0;i<l.length;i++){ const y=l[i]; if(y<ymin) ymin=y; if(y>ymax) ymax=y; } } }
+      if(band){ const m=band.mean,s=band.std; for(let i=0;i<m.length;i++){ const y1=m[i]-2*s[i], y2=m[i]+2*s[i]; if(y1<ymin) ymin=y1; if(y2>ymax) ymax=y2; } }
+      if(overlay && overlay.std){ const s=overlay.std; for(let i=0;i<s.length;i++){ const y1= -2*s[i], y2= +2*s[i]; if(y1<ymin) ymin=y1; if(y2>ymax) ymax=y2; } }
+      if(pts){ for(const p of pts){ if(p.y<ymin) ymin=p.y; if(p.y>ymax) ymax=p.y; } }
+      if(!isFinite(ymin)||!isFinite(ymax)){ ymin=-1; ymax=1; } if(ymax-ymin<1e-6){ ymin-=1; ymax+=1; }
+      const pad=0.1*(ymax-ymin); return {ymin:ymin-pad, ymax:ymax+pad}; }
+
+    function draw(canvas,Xs,lines,band,pts,priorOverlay){ const ctx=canvas.getContext('2d'); const rect=canvas.getBoundingClientRect(); const W=rect.width||canvas.clientWidth||1000, H=rect.height||canvas.clientHeight||520; const dpr=window.devicePixelRatio||1; canvas.width=Math.floor(W*dpr); canvas.height=Math.floor(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+      const margin={left:50,right:12,top:16,bottom:36}; const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom; ctx.clearRect(0,0,W,H); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+      const xmin=Xs[0], xmax=Xs[Xs.length-1]; const yr=getYRange(lines,pts,band,priorOverlay); state.lastYR=yr; const ymin=yr.ymin,ymax=yr.ymax; const x2px=x=>margin.left+(x-xmin)/(xmax-xmin)*innerW; const y2px=y=>margin.top+(1-(y-ymin)/(ymax-ymin))*innerH;
+      // grid
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.beginPath(); for(let gx=0; gx<=10; gx++){ const x=margin.left+innerW*(gx/10); ctx.moveTo(x,margin.top); ctx.lineTo(x,margin.top+innerH);} for(let gy=0; gy<=6; gy++){ const y=margin.top+innerH*(gy/6); ctx.moveTo(margin.left,y); ctx.lineTo(margin.left+innerW,y);} ctx.stroke();
+      // axes labels
+      ctx.fillStyle='#6b7280'; ctx.font='12px system-ui, -apple-system, Segoe UI, Roboto'; ctx.textAlign='center'; ctx.fillText('x', margin.left+innerW/2, H-10); ctx.save(); ctx.translate(16, margin.top+innerH/2); ctx.rotate(-Math.PI/2); ctx.fillText('f(x)', 0, 0); ctx.restore();
+      // prior overlay (mean 0 line / ±2σ band)
+      if(priorOverlay){
+        const m=priorOverlay.mean, s=priorOverlay.std;
+        if(priorOverlay.showBand && s){ ctx.fillStyle='rgba(97,218,251,0.12)'; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(0 - 2*s[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} for(let i=Xs.length-1;i>=0;i--){ const x=x2px(Xs[i]); const y=y2px(0 + 2*s[i]); ctx.lineTo(x,y);} ctx.closePath(); ctx.fill(); }
+        if(priorOverlay.showMean){ ctx.strokeStyle='#9ca3af'; ctx.lineWidth=1.5; ctx.setLineDash([6,4]); ctx.beginPath(); ctx.moveTo(x2px(xmin), y2px(0)); ctx.lineTo(x2px(xmax), y2px(0)); ctx.stroke(); ctx.setLineDash([]); }
+      }
+      // band
+      if(band){ const m=band.mean,s=band.std; ctx.fillStyle='rgba(255,184,107,0.18)'; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(m[i]-2*s[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} for(let i=Xs.length-1;i>=0;i--){ const x=x2px(Xs[i]); const y=y2px(m[i]+2*s[i]); ctx.lineTo(x,y);} ctx.closePath(); ctx.fill(); ctx.strokeStyle='#16a34a'; ctx.lineWidth=2; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(m[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.stroke(); }
+      // prior samples
+      if(lines && lines.length){ ctx.strokeStyle='#61dafb'; ctx.lineWidth=1.5; ctx.globalAlpha=0.9; for(const f of lines){ ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(f[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.stroke(); } ctx.globalAlpha=1; }
+      // points
+      if(pts && pts.length){ ctx.fillStyle='#ef4444'; for(const p of pts){ const x=x2px(p.x), y=y2px(p.y); ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill(); } }
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1.5; ctx.strokeRect(margin.left, margin.top, innerW, innerH);
+    }
+
+    // ====== Part 2: Probit Classification (Laplace Approx.) ======
+    // Normal pdf/cdf utilities
+    function normPdf(x){ return Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI); }
+    function erf(x){ // Abramowitz-Stegun 7.1.26 approximation
+      const sign = x < 0 ? -1 : 1; x = Math.abs(x);
+      const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+      const t = 1/(1 + p*x);
+      const y = 1 - ((((a5*t + a4)*t + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+      return sign * y;
+    }
+    function normCdf(x){ return 0.5*(1 + erf(x/Math.SQRT2)); }
+    function matVec(K,v){ const n=K.length; const out=new Float64Array(n); for(let i=0;i<n;i++){ let s=0; const Ki=K[i]; for(let j=0;j<n;j++) s+=Ki[j]*v[j]; out[i]=s; } return out; }
+    function addDiagInvW(K,W){ const n=K.length; const A=zeros(n,n); for(let i=0;i<n;i++){ for(let j=0;j<n;j++) A[i][j]=K[i][j]; A[i][i]+=1/Math.max(1e-9,W[i]); } return A; }
+
+    function laplaceProbit(X,y01,kernel,params){
+      const n=X.length; if(n===0){ return { fhat:new Float64Array(0), W:new Float64Array(0), K:null, alpha:new Float64Array(0) }; }
+      const K = addJ(gram(X,kernel,params,0),1e-6);
+      const L_K = cholesky(K) || cholesky(addJ(K,1e-4));
+      const t = new Float64Array(n); for(let i=0;i<n;i++) t[i] = y01[i] ? 1 : -1;
+      let f = new Float64Array(n); // init zeros
+      let W = new Float64Array(n);
+      for(let it=0; it<10; it++){
+        const g = new Float64Array(n);
+        for(let i=0;i<n;i++){
+          const v = t[i]*f[i];
+          const Phi = Math.max(1e-12, normCdf(v));
+          const phi = normPdf(v);
+          const r = phi / Phi; // φ/Φ
+          g[i] = t[i]*r; // gradient wrt f_i
+          W[i] = Math.max(1e-9, r*(r + v)); // -d2 log Φ(tf)/df^2
+        }
+        const z = matVec(K, g); for(let i=0;i<n;i++) z[i]+=f[i];
+        const A = addDiagInvW(K, W);
+        const L_A = cholesky(A) || cholesky(addJ(A,1e-4));
+        const a = solveUpper(L_A, solveLower(L_A, z));
+        const f_new = matVec(K, a);
+        let maxDiff=0; for(let i=0;i<n;i++){ const d=Math.abs(f_new[i]-f[i]); if(d>maxDiff) maxDiff=d; }
+        f = f_new;
+        if(maxDiff < 1e-4) break;
+      }
+      // alpha = K^{-1} f_hat
+      const ytmp = solveLower(L_K, f);
+      const alpha = solveUpper(L_K, ytmp);
+      return { fhat:f, W, K, alpha };
+    }
+
+    function predictProbitAll(model, Xtrain, Xtest, kernel, params){
+      const n=Xtrain.length, m=Xtest.length; const p=new Float64Array(m); const mArr=new Float64Array(m); const sArr=new Float64Array(m);
+      const A = addDiagInvW(model.K, model.W);
+      const L_A = cholesky(A) || cholesky(addJ(A,1e-4));
+      for(let j=0;j<m;j++){
+        const ks = new Float64Array(n); for(let i=0;i<n;i++) ks[i]=kernel(Xtrain[i], Xtest[j], params);
+        let mstar=0; for(let i=0;i<n;i++) mstar += ks[i]*model.alpha[i];
+        const v = solveUpper(L_A, solveLower(L_A, ks));
+        const kss = kernel(Xtest[j], Xtest[j], params);
+        let s2 = kss; for(let i=0;i<n;i++) s2 -= ks[i]*v[i];
+        const denom = Math.sqrt(1 + Math.max(1e-12, s2));
+        const pj = normCdf(mstar / denom);
+        p[j] = Math.max(0, Math.min(1, pj));
+        mArr[j] = mstar; sArr[j] = Math.sqrt(Math.max(1e-12, s2));
+      }
+      return { p, m: mArr, s: sArr };
+    }
+
+    function drawCls(canvas, Xs, probs, pts){ const ctx=canvas.getContext('2d'); const rect=canvas.getBoundingClientRect(); const W=rect.width||canvas.clientWidth||1000, H=rect.height||canvas.clientHeight||520; const dpr=window.devicePixelRatio||1; canvas.width=Math.floor(W*dpr); canvas.height=Math.floor(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+      const margin={left:50,right:12,top:16,bottom:36}; const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom; ctx.clearRect(0,0,W,H); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+      const xmin=Xs[0], xmax=Xs[Xs.length-1]; const ymin=0, ymax=1; const x2px=x=>margin.left+(x-xmin)/(xmax-xmin)*innerW; const y2px=y=>margin.top+(1-(y-ymin)/(ymax-ymin))*innerH;
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.beginPath(); for(let gx=0; gx<=10; gx++){ const x=margin.left+innerW*(gx/10); ctx.moveTo(x,margin.top); ctx.lineTo(x,margin.top+innerH);} for(let gy=0; gy<=4; gy++){ const y=margin.top+innerH*(gy/4); ctx.moveTo(margin.left,y); ctx.lineTo(margin.left+innerW,y);} ctx.stroke();
+      ctx.fillStyle='#6b7280'; ctx.font='12px system-ui, -apple-system, Segoe UI, Roboto'; ctx.textAlign='center'; ctx.fillText('x', margin.left+innerW/2, H-10); ctx.save(); ctx.translate(16, margin.top+innerH/2); ctx.rotate(-Math.PI/2); ctx.fillText('p(y=1|x)', 0, 0); ctx.restore();
+      ctx.setLineDash([5,4]); ctx.strokeStyle='#9ca3af'; ctx.beginPath(); ctx.moveTo(margin.left, y2px(0.5)); ctx.lineTo(margin.left+innerW, y2px(0.5)); ctx.stroke(); ctx.setLineDash([]);
+      // clip to plot area
+      ctx.save(); ctx.beginPath(); ctx.rect(margin.left, margin.top, innerW, innerH); ctx.clip();
+      ctx.strokeStyle='#16a34a'; ctx.lineWidth=2; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(Math.max(0, Math.min(1, probs[i]))); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.stroke();
+      if(pts && pts.length){ for(const p of pts){ if(p.x < xmin || p.x > xmax) continue; const x=x2px(p.x), y=y2px(Math.max(0, Math.min(1, p.y))); ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fillStyle = (p.y>0.5)? '#ef4444' : '#3b82f6'; ctx.fill(); } }
+      ctx.restore();
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1.5; ctx.strokeRect(margin.left, margin.top, innerW, innerH);
+    }
+
+    function drawLatent(canvas, Xs, m, s, showMean, showBand){ const ctx=canvas.getContext('2d'); const rect=canvas.getBoundingClientRect(); const W=rect.width||canvas.clientWidth||1000, H=rect.height||canvas.clientHeight||360; const dpr=window.devicePixelRatio||1; canvas.width=Math.floor(W*dpr); canvas.height=Math.floor(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+      const margin={left:50,right:12,top:16,bottom:36}; const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom; ctx.clearRect(0,0,W,H); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+      // y-range based on band
+      let ymin=Infinity, ymax=-Infinity; for(let i=0;i<Xs.length;i++){ const y1=m[i]-2*s[i], y2=m[i]+2*s[i]; if(y1<ymin) ymin=y1; if(y2>ymax) ymax=y2; }
+      if(!isFinite(ymin)||!isFinite(ymax)){ ymin=-1; ymax=1; } const pad=0.1*(ymax-ymin); ymin-=pad; ymax+=pad;
+      const xmin=Xs[0], xmax=Xs[Xs.length-1]; const x2px=x=>margin.left+(x-xmin)/(xmax-xmin)*innerW; const y2px=y=>margin.top+(1-(y-ymin)/(ymax-ymin))*innerH;
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1; ctx.beginPath(); for(let gx=0; gx<=10; gx++){ const x=margin.left+innerW*(gx/10); ctx.moveTo(x,margin.top); ctx.lineTo(x,margin.top+innerH);} for(let gy=0; gy<=6; gy++){ const y=margin.top+innerH*(gy/6); ctx.moveTo(margin.left,y); ctx.lineTo(margin.left+innerW,y);} ctx.stroke();
+      ctx.fillStyle='#6b7280'; ctx.font='12px system-ui, -apple-system, Segoe UI, Roboto'; ctx.textAlign='center'; ctx.fillText('x', margin.left+innerW/2, H-10); ctx.save(); ctx.translate(16, margin.top+innerH/2); ctx.rotate(-Math.PI/2); ctx.fillText('latent f', 0, 0); ctx.restore();
+      // band
+      if(showBand){ ctx.fillStyle='rgba(245,158,11,0.18)'; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(m[i]-2*s[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} for(let i=Xs.length-1;i>=0;i--){ const x=x2px(Xs[i]); const y=y2px(m[i]+2*s[i]); ctx.lineTo(x,y);} ctx.closePath(); ctx.fill(); }
+      // mean
+      if(showMean){ ctx.strokeStyle='#16a34a'; ctx.lineWidth=2; ctx.beginPath(); for(let i=0;i<Xs.length;i++){ const x=x2px(Xs[i]); const y=y2px(m[i]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.stroke(); }
+      ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=1.5; ctx.strokeRect(margin.left, margin.top, innerW, innerH);
+    }
+
+    const state_cls = { kernel:'rbf', params:{ sigma_f:1.0, ell:1.2, period:3.0, sigma_b:0.1 }, ngrids:200, xrange:[-5,5], Xs:[], points:[], label:1, model:null, showFMean:false, showFBand:false };
+    function readClsUI(){ state_cls.kernel=$id('cls-kernel').value; state_cls.params.sigma_f=parseFloat($id('cls_sigma_f').value); state_cls.params.ell=parseFloat($id('cls_ell').value); state_cls.params.period=parseFloat($id('cls_period').value); state_cls.params.sigma_b=parseFloat($id('cls_sigma_b').value); state_cls.ngrids=Math.max(60, Math.min(600, parseInt($id('cls_ngrids').value||'200',10))); state_cls.label = $id('cls_label1').checked ? 1 : 0; state_cls.showFMean = $id('cls_show_mean').checked; state_cls.showFBand = $id('cls_show_band').checked; }
+    function updateClsParamVisibility(){ const k=$id('cls-kernel').value; $id('cls_row_period').style.display=(k==='periodic')?'':'none'; $id('cls_row_sigma_b').style.display=(k==='linear')?'':'none'; }
+    function recomputeCls(){ const cv=$id('cv_cls'); const cvf=$id('cv_cls_f'); const wrap=$id('cv_cls_f_wrap'); const leg=$id('cv_cls_f_legend'); const note=$id('cv_cls_f_note'); readClsUI(); state_cls.Xs=linspace(state_cls.xrange[0], state_cls.xrange[1], state_cls.ngrids); const k=kSel(state_cls.kernel); const Xtr=state_cls.points.map(p=>p.x); const y01=state_cls.points.map(p=>p.y);
+      if(Xtr.length>0){ const model = laplaceProbit(Xtr, y01, k, state_cls.params); state_cls.model=model; const pred = predictProbitAll(model, Xtr, state_cls.Xs, k, state_cls.params); drawCls(cv, state_cls.Xs, pred.p, state_cls.points); 
+        if(state_cls.showFMean || state_cls.showFBand){ wrap.style.display=''; leg.style.display=''; note.style.display=''; drawLatent(cvf, state_cls.Xs, pred.m, pred.s, state_cls.showFMean, state_cls.showFBand); } else { wrap.style.display='none'; leg.style.display='none'; note.style.display='none'; }
+      } else { const probs = new Float64Array(state_cls.Xs.length).fill(0.5); drawCls(cv, state_cls.Xs, probs, state_cls.points); wrap.style.display='none'; leg.style.display='none'; note.style.display='none'; }
+      if(window.MathJax && window.MathJax.typesetPromise){ window.MathJax.typesetPromise(); }
+    }
+    function addRandCls(){ const x = state_cls.xrange[0] + Math.random()*(state_cls.xrange[1]-state_cls.xrange[0]); const p = normCdf(trueF(x)); const y = (Math.random() < p) ? 1 : 0; state_cls.points.push({x, y}); }
+    function setupCls(){ ['cls-kernel','cls_sigma_f','cls_ell','cls_period','cls_sigma_b','cls_ngrids','cls_show_mean','cls_show_band'].forEach(id=> $id(id).addEventListener('input', ()=>{ updateClsParamVisibility(); recomputeCls(); })); ['cls_label1','cls_label0'].forEach(id=> $id(id).addEventListener('change', ()=>{ readClsUI(); })); $id('cls_update').addEventListener('click', ()=>recomputeCls()); $id('cls_clear').addEventListener('click', ()=>{ state_cls.points=[]; recomputeCls(); }); $id('cls_addrand').addEventListener('click', ()=>{ addRandCls(); recomputeCls(); }); const cv=$id('cv_cls'); cv.addEventListener('contextmenu', e=>e.preventDefault()); cv.addEventListener('mousedown', (e)=>{ const r=cv.getBoundingClientRect(); const W=r.width,H=r.height; const m={left:50,right:12,top:16,bottom:36}; const innerW=W-m.left-m.right; const xPix=e.clientX-r.left, yPix=e.clientY-r.top; // ensure click inside plot area
+        if(xPix < m.left || xPix > (W - m.right) || yPix < m.top || yPix > (H - m.bottom)) return;
+        const xr0 = state_cls.xrange[0], xr1 = state_cls.xrange[1];
+        let x = xr0 + (xPix - m.left)/innerW * (xr1 - xr0);
+        x = Math.max(xr0, Math.min(xr1, x));
+        if(e.button===2){ if(state_cls.points.length){ let bi=0,bd=Infinity; for(let i=0;i<state_cls.points.length;i++){ const dx=state_cls.points[i].x-x; const d=Math.abs(dx); if(d<bd){ bd=d; bi=i; } } state_cls.points.splice(bi,1); recomputeCls(); } } else if(e.button===0){ state_cls.points.push({x, y: state_cls.label}); recomputeCls(); } }); window.addEventListener('resize', ()=>{ recomputeCls(); }); }
+
+    // ----- UI & interactions -----
+    function readUI(){ state.mode=$id('mode').value; state.kernel=$id('kernel').value; state.params.sigma_f=parseFloat($id('sigma_f').value); state.params.ell=parseFloat($id('ell').value); state.params.period=parseFloat($id('period').value); state.params.sigma_b=parseFloat($id('sigma_b').value); state.sigma_n=parseFloat($id('sigma_n').value); state.nsamples=Math.max(1,Math.min(8,parseInt($id('nsamples').value||'3',10))); state.ngrids=Math.max(60,Math.min(600,parseInt($id('ngrids').value||'200',10))); state.showPriorMean=$id('show_prior_mean').checked; state.showPriorBand=$id('show_prior_band').checked; }
+    function updateParamVisibility(){ const k=$id('kernel').value; $id('row-period').style.display=(k==='periodic')?'':'none'; $id('row-sigma_b').style.display=(k==='linear')?'':'none'; const post=( $id('mode').value==='posterior' ); $id('g-post').style.display=post?'':'none'; $id('g-actions').style.display=post?'':'none'; $id('g-prior-opts').style.display=!post?'':'none'; }
+    function updateParamChips(){ document.querySelectorAll('[data-param="sigma_f"]').forEach(e=> e.textContent = state.params.sigma_f.toString()); document.querySelectorAll('[data-param="ell"]').forEach(e=> e.textContent = state.params.ell.toString()); document.querySelectorAll('[data-param="period"]').forEach(e=> e.textContent = state.params.period.toString()); document.querySelectorAll('[data-param="sigma_b"]').forEach(e=> e.textContent = state.params.sigma_b.toString()); document.querySelectorAll('[data-param="sigma_n"]').forEach(e=> e.textContent = state.sigma_n.toString()); }
+    function priorKey(){ const p=state.params; return JSON.stringify({kernel:state.kernel,sigma_f:p.sigma_f,ell:p.ell,period:p.period,sigma_b:p.sigma_b,nsamples:state.nsamples,ngrids:state.ngrids,xmin:state.xrange[0],xmax:state.xrange[1]}); }
+    function recompute(opts){ opts=opts||{}; const cv=$id('cv'); readUI(); state.Xs=linspace(state.xrange[0],state.xrange[1],state.ngrids); const k=kSel(state.kernel); let lines=[], band=null, priorOverlay=null;
+      if(state.mode==='prior'){
+        const key=priorKey(); let needResample=false;
+        if(opts.resamplePrior===true) needResample=true; else if(opts.resamplePrior===false) needResample=false; else needResample = (!state.priorLines || state.priorLines.length===0 || key!==state.lastPriorKey);
+        if(needResample){ state.priorLines = priorSamples(state.Xs,k,state.params,state.nsamples); state.lastPriorKey = key; }
+        lines = state.priorLines;
+        if(state.showPriorMean || state.showPriorBand){ const std=new Float64Array(state.Xs.length); for(let i=0;i<state.Xs.length;i++){ std[i]=Math.sqrt(Math.max(1e-12,k(state.Xs[i],state.Xs[i],state.params))); } priorOverlay={ mean:null, std, showMean:state.showPriorMean, showBand:state.showPriorBand }; }
+      } else {
+        const xt=state.points.map(p=>p.x), yt=state.points.map(p=>p.y); band=posterior(xt,yt,state.Xs,k,state.params,state.sigma_n);
+      }
+      draw(cv,state.Xs,lines,band,state.points,priorOverlay);
+      updateParamChips();
+      if(window.MathJax && window.MathJax.typesetPromise){ window.MathJax.typesetPromise(); }
+      else if(window.MathJax && window.MathJax.typeset){ window.MathJax.typeset(); }
+    }
+
+    function $id(x){ return document.getElementById(x); }
+    function addRandomObs(){ const x=state.xrange[0]+Math.random()*(state.xrange[1]-state.xrange[0]); const y=trueF(x)+state.sigma_n*randn(); state.points.push({x,y}); }
+
+    function setup(){
+      // Controls that may alter the stochastic prior -> resample on change
+      ;['mode','kernel','sigma_f','ell','period','sigma_b','nsamples','ngrids'].forEach(id=> $id(id).addEventListener('input', ()=>{ updateParamVisibility(); recompute({resamplePrior:true}); }));
+      // Controls that should not trigger resampling of prior
+      ;['sigma_n'].forEach(id=> $id(id).addEventListener('input', ()=>{ updateParamVisibility(); recompute({resamplePrior:false}); }));
+      ;['show_prior_mean','show_prior_band'].forEach(id=> $id(id).addEventListener('input', ()=>{ updateParamVisibility(); recompute({resamplePrior:false}); }));
+      $id('btn-update').addEventListener('click', ()=>recompute({resamplePrior:true}));
+      $id('btn-clear').addEventListener('click', ()=>{ state.points=[]; recompute({resamplePrior:false}); });
+      $id('btn-add').addEventListener('click', ()=>{ addRandomObs(); recompute({resamplePrior:false}); });
+      const cv=$id('cv'); cv.addEventListener('contextmenu', e=>e.preventDefault()); cv.addEventListener('mousedown', (e)=>{ const r=cv.getBoundingClientRect(); const W=r.width, H=r.height; const m={left:50,right:12,top:16,bottom:36}; const innerW=W-m.left-m.right, innerH=H-m.top-m.bottom; const xPix=e.clientX-r.left, yPix=e.clientY-r.top; const x=state.xrange[0]+(xPix-m.left)/innerW*(state.xrange[1]-state.xrange[0]); const yr=state.lastYR; const ymin=yr.ymin, ymax=yr.ymax; const y=ymax-(yPix-m.top)/innerH*(ymax-ymin);
+        if(e.button===2){ // remove
+          if(state.points.length){ let bi=0, bd=Infinity; for(let i=0;i<state.points.length;i++){ const dx=state.points[i].x-x, dy=state.points[i].y-y; const d=dx*dx+dy*dy; if(d<bd){ bd=d; bi=i; } } state.points.splice(bi,1); recompute({resamplePrior:false}); }
+        } else if(e.button===0){ if($id('mode').value==='posterior'){ state.points.push({x,y}); recompute({resamplePrior:false}); } }
+      }); window.addEventListener('resize', ()=>recompute({resamplePrior:false})); }
+
+    // ----- Init -----
+    (function init(){
+      // Normal PDF/CDF
+      setupNorm(); recomputeNorm();
+      // Part 1: GP regression
+      updateParamVisibility(); for(let i=0;i<6;i++) addRandomObs(); recompute(); setup();
+      // Part 2: GP classification (Probit)
+      updateClsParamVisibility(); for(let i=0;i<8;i++) addRandCls(); recomputeCls(); setupCls();
+    })();
+  </script>
+</body>
+</html>
