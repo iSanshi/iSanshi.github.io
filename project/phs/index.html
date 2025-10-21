@@ -882,9 +882,15 @@
 
     <div class="article-style">
       <h2 id="abstract"><strong>Abstract</strong></h2>
-<p>Personalizing haptic feedback is challenging because users struggle to provide absolute ratings of satisfaction. We propose a preference-based approach that infers a user’s latent utility from binary pairwise comparisons (A/B choices). A Gaussian Process (GP) preference model captures uncertainty and smoothness over the stimulus space, and an active query policy selects comparisons by maximizing expected information gain. Self-reported response uncertainty is incorporated as per-comparison weights, reducing the impact of ambiguous judgments. To mitigate user fatigue and rating drift associated with extensive absolute scoring—and to address the difficulty of placing tactile sensations on a numeric scale—the system emphasizes relative judgments. We implement the method by adapting an existing algorithmic framework to the haptic setting, specifying the GP prior/kernel and an information-gain acquisition function for this domain. Simulations with synthetic ground-truth preferences indicate accurate recovery of preference maps and optima, with improved sample efficiency over uniform sampling.</p>
-<p>Our contributions are: (i) a binary, preference-driven alternative to absolute rating for haptic personalization; (ii) an uncertainty-aware GP formulation for pairwise preference learning; and (iii) an active query strategy adapted to haptics and validated in simulation.</p>
-<h2 id="uiimagepng">
+<p>Personalizing haptic feedback is difficult because users struggle to assign absolute satisfaction scores. We introduce a preference-based method that infers a user’s latent utility surface from binary pairwise comparisons (A/B choices). A Gaussian Process (GP) preference model encodes smoothness and posterior uncertainty over the stimulus space, while an active query policy selects comparisons by maximizing expected information gain. We incorporate self-reported response uncertainty as per-comparison weights to down-weight ambiguous judgments. By emphasizing relative rather than absolute evaluations, the system mitigates rating fatigue and drift and avoids forcing users to map tactile sensations onto a numeric scale. In simulation with synthetic ground-truth preferences, the method accurately recovers preference maps and optima, achieving higher sample efficiency than uniform/query-agnostic sampling. We also release an open-source framework for interactive preference search over haptic signals.</p>
+<h2 id="contributions"><strong>Contributions</strong></h2>
+<ul>
+<li>A binary, preference-driven learning approach to haptic personalization that reduces user fatigue and rating drift.</li>
+<li>An interaction loop that weights comparisons by user-reported uncertainty to improve search efficiency.</li>
+<li>An open-source, extensible code framework for interactive preference search over haptic signals.</li>
+</ul>
+<h2 id="demo"><strong>Demo</strong></h2>
+<p>
 
 
 
@@ -911,7 +917,8 @@
                height="448"
                loading="lazy" data-zoomable /></div>
   </div></figure>
-</h2>
+</p>
+<hr>
 <h2 id="acknowledgments"><strong>Acknowledgments</strong></h2>
 <p>This work is being conducted under the guidance of <a href="https://www.cs.usc.edu/directory/faculty/profile/?lname=Culbertson&fname=Heather" target="_blank"><strong>Dr. Heather Culbertson</strong></a> and <a href="https://ebiyik.github.io" target="_blank"><strong>Dr. Erdem Bıyık</strong></a>.</p>
 

@@ -18,9 +18,15 @@
       <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://isanshi.github.io/project/phs/</guid>
       <description>&lt;h2 id=&#34;abstract&#34;&gt;&lt;strong&gt;Abstract&lt;/strong&gt;&lt;/h2&gt;
-&lt;p&gt;Personalizing haptic feedback is challenging because users struggle to provide absolute ratings of satisfaction. We propose a preference-based approach that infers a user’s latent utility from binary pairwise comparisons (A/B choices). A Gaussian Process (GP) preference model captures uncertainty and smoothness over the stimulus space, and an active query policy selects comparisons by maximizing expected information gain. Self-reported response uncertainty is incorporated as per-comparison weights, reducing the impact of ambiguous judgments. To mitigate user fatigue and rating drift associated with extensive absolute scoring—and to address the difficulty of placing tactile sensations on a numeric scale—the system emphasizes relative judgments. We implement the method by adapting an existing algorithmic framework to the haptic setting, specifying the GP prior/kernel and an information-gain acquisition function for this domain. Simulations with synthetic ground-truth preferences indicate accurate recovery of preference maps and optima, with improved sample efficiency over uniform sampling.&lt;/p&gt;
-&lt;p&gt;Our contributions are: (i) a binary, preference-driven alternative to absolute rating for haptic personalization; (ii) an uncertainty-aware GP formulation for pairwise preference learning; and (iii) an active query strategy adapted to haptics and validated in simulation.&lt;/p&gt;
-&lt;h2 id=&#34;uiimagepng&#34;&gt;
+&lt;p&gt;Personalizing haptic feedback is difficult because users struggle to assign absolute satisfaction scores. We introduce a preference-based method that infers a user’s latent utility surface from binary pairwise comparisons (A/B choices). A Gaussian Process (GP) preference model encodes smoothness and posterior uncertainty over the stimulus space, while an active query policy selects comparisons by maximizing expected information gain. We incorporate self-reported response uncertainty as per-comparison weights to down-weight ambiguous judgments. By emphasizing relative rather than absolute evaluations, the system mitigates rating fatigue and drift and avoids forcing users to map tactile sensations onto a numeric scale. In simulation with synthetic ground-truth preferences, the method accurately recovers preference maps and optima, achieving higher sample efficiency than uniform/query-agnostic sampling. We also release an open-source framework for interactive preference search over haptic signals.&lt;/p&gt;
+&lt;h2 id=&#34;contributions&#34;&gt;&lt;strong&gt;Contributions&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A binary, preference-driven learning approach to haptic personalization that reduces user fatigue and rating drift.&lt;/li&gt;
+&lt;li&gt;An interaction loop that weights comparisons by user-reported uncertainty to improve search efficiency.&lt;/li&gt;
+&lt;li&gt;An open-source, extensible code framework for interactive preference search over haptic signals.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;demo&#34;&gt;&lt;strong&gt;Demo&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;
 
 
 
@@ -47,7 +53,8 @@
                height=&#34;448&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
   &lt;/div&gt;&lt;/figure&gt;
-&lt;/h2&gt;
+&lt;/p&gt;
+&lt;hr&gt;
 &lt;h2 id=&#34;acknowledgments&#34;&gt;&lt;strong&gt;Acknowledgments&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;This work is being conducted under the guidance of &lt;a href=&#34;https://www.cs.usc.edu/directory/faculty/profile/?lname=Culbertson&amp;fname=Heather&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Dr. Heather Culbertson&lt;/strong&gt;&lt;/a&gt; and &lt;a href=&#34;https://ebiyik.github.io&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Dr. Erdem Bıyık&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
 </description>
