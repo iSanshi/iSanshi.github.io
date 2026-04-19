@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Haptics | Rongtao Zhang</title>
+    <link>https://isanshi.github.io/tag/haptics/</link>
+      <atom:link href="https://isanshi.github.io/tag/haptics/index.xml" rel="self" type="application/rss+xml" />
+    <description>Haptics</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 01 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://isanshi.github.io/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_512x512_fill_lanczos_center_3.png</url>
+      <title>Haptics</title>
+      <link>https://isanshi.github.io/tag/haptics/</link>
+    </image>
+    
+    <item>
+      <title>Vibrotactile Preference Learning: Uncertainty-Aware Preference Learning for Personalized Vibration Feedback</title>
+      <link>https://isanshi.github.io/publication/vpl/</link>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://isanshi.github.io/publication/vpl/</guid>
+      <description>&lt;p&gt;Personalizing vibration feedback is difficult because tactile preferences vary substantially across users, while absolute rating interfaces are tiring, unstable, and hard to calibrate over long sessions. This paper introduces &lt;strong&gt;Vibrotactile Preference Learning (VPL)&lt;/strong&gt;, an interactive system that learns a user&amp;rsquo;s preferred vibration signal from &lt;strong&gt;pairwise A/B comparisons&lt;/strong&gt; instead of numeric ratings.&lt;/p&gt;
+&lt;p&gt;VPL combines three ideas:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pairwise preference learning&lt;/strong&gt; to reduce rating drift and cognitive burden.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Confidence-aware modeling&lt;/strong&gt; so that uncertain user judgments are weighted differently from confident ones.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Active query selection&lt;/strong&gt; based on expected information gain to make each comparison maximally useful.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The system is implemented on a &lt;strong&gt;Microsoft Xbox controller&lt;/strong&gt; and searches over a four-dimensional vibrotactile parameter space. After each comparison, the model updates its estimate of the user&amp;rsquo;s latent preference function and selects the next most informative pair to present.&lt;/p&gt;
+&lt;h2 id=&#34;system-overview&#34;&gt;System Overview&lt;/h2&gt;
+&lt;div style=&#34;max-width: 1040px; margin: 0 auto 1.25rem;&#34;&gt;
+  &lt;img src=&#34;system_overview.png&#34; alt=&#34;System overview&#34; style=&#34;width: 100%; height: auto; display: block;&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;The interface presents two candidate vibration signals, asks the user which one they prefer, and also asks how certain they are about that choice. These responses update a Gaussian process preference model, which is then used to propose the next comparison and eventually recommend a personalized vibration signal.&lt;/p&gt;
+&lt;h2 id=&#34;why-this-matters&#34;&gt;Why This Matters&lt;/h2&gt;
+&lt;p&gt;Most practical haptic systems still rely on fixed vibration presets or manual slider tuning. That is problematic because users differ in perception, comfort, and preference, and many non-expert users do not understand parameters such as intensity or rhythm well enough to tune them directly.&lt;/p&gt;
+&lt;p&gt;VPL reframes personalization as a short interactive learning process. Instead of asking users to search a high-dimensional design space themselves, the system guides them through a bounded set of comparisons and automatically infers a personalized solution.&lt;/p&gt;
+&lt;h2 id=&#34;potential-applications&#34;&gt;Potential Applications&lt;/h2&gt;
+&lt;div style=&#34;max-width: 980px; margin: 0 auto 1.25rem;&#34;&gt;
+  &lt;img src=&#34;application_overview.png&#34; alt=&#34;Illustrative applications of personalized vibrotactile feedback&#34; style=&#34;width: 100%; height: auto; display: block;&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;The paper highlights several application settings where personalized vibrotactile feedback could be valuable, including VR and AR interaction, affective haptics, accessibility, mobile and wearable notifications, rehabilitation, and automotive interfaces. In each of these settings, the key challenge is the same: a fixed vibration pattern may not produce the intended user experience across different people, contexts, or tasks.&lt;/p&gt;
+&lt;h2 id=&#34;main-contributions&#34;&gt;Main Contributions&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;confidence-aware Gaussian process preference model&lt;/strong&gt; for learning personalized vibrotactile utility functions.&lt;/li&gt;
+&lt;li&gt;An &lt;strong&gt;information-gain-based active querying strategy&lt;/strong&gt; that improves data efficiency under a limited interaction budget.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;user study with 13 participants&lt;/strong&gt; showing that the method can produce satisfying personalized recommendations within &lt;strong&gt;40 comparisons&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- ## Resources
+
+- [Paper PDF](/publication/vibrotactile-preference-learning/VPL_UMAP26.pdf)
+- [Code Repository](https://github.com/HaRVI-Lab/vibrotactile-preference-learning)
+- [DOI](https://doi.org/10.1145/3774935.3806784) --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Robotics | Rongtao Zhang</title>
+    <link>https://isanshi.github.io/tag/robotics/</link>
+      <atom:link href="https://isanshi.github.io/tag/robotics/index.xml" rel="self" type="application/rss+xml" />
+    <description>Robotics</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 15 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://isanshi.github.io/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_512x512_fill_lanczos_center_3.png</url>
+      <title>Robotics</title>
+      <link>https://isanshi.github.io/tag/robotics/</link>
+    </image>
+    
+    <item>
+      <title>Target Alignment for a Robotic Arm via Reinforcement Learning</title>
+      <link>https://isanshi.github.io/project/arm-alignment-rl/</link>
+      <pubDate>Sat, 15 Apr 2023 00:00:00 +0000</pubDate>
+      <guid>https://isanshi.github.io/project/arm-alignment-rl/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;&lt;strong&gt;Overview&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project studies robotic target alignment with reinforcement learning. The goal is to control a UR5 manipulator to align its end-effector with a target object of unknown pose. The work was completed as a team project with &lt;strong&gt;Jianlin Ye&lt;/strong&gt;, &lt;strong&gt;Guanyu Yao&lt;/strong&gt;, and &lt;strong&gt;Fangzhou Ye&lt;/strong&gt;, advised by &lt;a href=&#34;http://faculty.bjtu.edu.cn/7904/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Prof. Sheng Han&lt;/a&gt; and &lt;a href=&#34;https://faculty.bjtu.edu.cn/10107/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Prof. Kai Lv&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;approach&#34;&gt;&lt;strong&gt;Approach&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;We built a task-specific simulation environment for the alignment problem, with multimodal observations including RGB, depth, and robot state. To make learning more effective, the method combined structured visual features, imitation learning, curriculum learning, and a PPO-based control policy.&lt;/p&gt;
+&lt;div style=&#34;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;align-items:start;&#34;&gt;
+  &lt;div&gt;
+    &lt;img src=&#34;ur5-model.png&#34; alt=&#34;UR5 model&#34; style=&#34;border-radius:14px;&#34;&gt;
+    &lt;p&gt;&lt;em&gt;UR5 manipulator model used in the environment.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;img src=&#34;target-model.png&#34; alt=&#34;Target object model&#34; style=&#34;border-radius:14px;&#34;&gt;
+    &lt;p&gt;&lt;em&gt;Target object model for alignment.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
+  &lt;source src=&#34;https://isanshi.github.io/uploads/arm-alignment-videos/simulation-demo.mp4&#34; type=&#34;video/mp4&#34;&gt;
+&lt;/video&gt;
+&lt;p&gt;&lt;em&gt;Simulation demo of the alignment environment and control process.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;results&#34;&gt;&lt;strong&gt;Results&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The project produced a working simulation environment, a visual representation for alignment, and a PPO-based policy for the task. We also validated the setup with physical-system experiments.&lt;/p&gt;
+&lt;div style=&#34;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;align-items:start;&#34;&gt;
+  &lt;div&gt;
+    &lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:14px;&#34;&gt;
+      &lt;source src=&#34;https://isanshi.github.io/uploads/arm-alignment-videos/simulation-closeup.mp4&#34; type=&#34;video/mp4&#34;&gt;
+    &lt;/video&gt;
+    &lt;p&gt;&lt;em&gt;Close-up simulation clip.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:14px;&#34;&gt;
+      &lt;source src=&#34;https://isanshi.github.io/uploads/arm-alignment-videos/physical-demo.mp4&#34; type=&#34;video/mp4&#34;&gt;
+    &lt;/video&gt;
+    &lt;p&gt;&lt;em&gt;Physical-system demo.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

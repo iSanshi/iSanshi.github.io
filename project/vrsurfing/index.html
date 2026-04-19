@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<!-- Last Published: April 20, 2026 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/vendor/main.min.css" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.10f8b14d1102956488b534af5f6c1fe9.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Rongtao Zhang" />
+
+
+
+
+
+  
+
+<meta name="description" content="A VR interaction project on hand-tracking-based surfboard control using MediaPipe pose estimation, immersive visual feedback, and a motorized surfing platform." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://isanshi.github.io/project/vrsurfing/" />
+<link rel="canonical" href="https://isanshi.github.io/project/vrsurfing/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="rgb(102, 25, 36)" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://isanshi.github.io/project/vrsurfing/featured.png" />
+<meta property="og:site_name" content="Rongtao Zhang" />
+<meta property="og:url" content="https://isanshi.github.io/project/vrsurfing/" />
+<meta property="og:title" content="VR Surfing Hand-Tracking Control | Rongtao Zhang" />
+<meta property="og:description" content="A VR interaction project on hand-tracking-based surfboard control using MediaPipe pose estimation, immersive visual feedback, and a motorized surfing platform." /><meta property="og:image" content="https://isanshi.github.io/project/vrsurfing/featured.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2025-02-16T00:00:00&#43;00:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2025-02-16T00:00:00&#43;00:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://isanshi.github.io/project/vrsurfing/"
+  },
+  "headline": "VR Surfing Hand-Tracking Control",
+  
+  "image": [
+    "https://isanshi.github.io/project/vrsurfing/featured.png"
+  ],
+  
+  "datePublished": "2025-02-16T00:00:00Z",
+  "dateModified": "2025-02-16T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Rongtao Zhang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Rongtao Zhang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://isanshi.github.io/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "A VR interaction project on hand-tracking-based surfboard control using MediaPipe pose estimation, immersive visual feedback, and a motorized surfing platform."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>VR Surfing Hand-Tracking Control | Rongtao Zhang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <meta name="theme-color" content="rgb(102, 25, 36)">
+<script defer src="/js/vendor/imagesloaded.pkgd.min.js"></script>
+<script defer src="/js/vendor/isotope.pkgd.min.js"></script>
+<link rel="stylesheet" href="/css/custom-site.css">
+<script defer src="/js/custom-site.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="3b01f639f81a0461e29e0dd2973ed281" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ca4855e912c8b548167ece2aaed3e019.js"></script>
+
+  
+
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Rongtao Zhang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Rongtao Zhang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#publications"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#experience"><span>Experience</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <div class="project">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1>VR Surfing Hand-Tracking Control</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Feb 16, 2025
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 537px;">
+  <div style="position: relative">
+    <img src="/project/vrsurfing/featured_huf86ad5b5815a949849ce38f55f1d2b5d_5335061_720x2500_fit_q100_h2_lanczos_3.webp" width="720" height="537" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+    <div class="article-style">
+      <h2 id="overview"><strong>Overview</strong></h2>
+<p>This project explores <strong>VR surfing interaction</strong> with a <strong>VR headset</strong> and a <strong>motorized mechanical surfboard platform</strong> designed to simulate the body motion of real surfing. The main goal was to create a more immersive and physically engaging surfing experience by combining virtual-environment feedback with real-time body tracking and motion control.</p>
+<p>The project was completed in collaboration with <strong>Premankur Banerjee</strong>, and was advised by <a href="https://viterbi.usc.edu/directory/faculty/Culbertson/Heather" target="_blank" rel="noopener">Heather Culbertson</a> and <a href="https://ampl.usc.edu/" target="_blank" rel="noopener">Jason Kutch</a> at <strong>USC</strong>.</p>
+<video controls preload="metadata" style="width:100%;border-radius:16px;margin-top:1rem;">
+  <source src="env.MOV" type="video/quicktime">
+</video>
+<p><em>Experimental environment for the VR surfing setup.</em></p>
+<h2 id="system-design-and-results"><strong>System Design and Results</strong></h2>
+<p>The overall system integrated <strong>visual perception</strong>, <strong>motion interpretation</strong>, and <strong>physical actuation</strong> into one interactive loop. The <strong>VR headset</strong> provided the immersive surfing scene and real-time environmental feedback, while the <strong>hand-tracking module</strong> extracted user motion from joint landmarks. The control logic mapped hand movement and virtual water-level variation to board commands, and a <strong>controllable mechanical surfboard</strong> executed the commanded movement to reproduce wave-like motion.</p>
+<p>To enable natural interaction, we built a <strong>MediaPipe-based full-body joint tracking system</strong> with a particular focus on <strong>hand landmark detection</strong>. The user’s hand motion was interpreted together with changes in the virtual environment’s <strong>water level</strong>, and this relationship was used to control the movement of the surfing board. By coupling perception and actuation in real time, the project created a closed-loop VR control system that translated body motion into physical surfing feedback.</p>
+<p>The project produced a working prototype for <strong>hand-tracking-based VR surfboard control</strong>, demonstrating that body-joint tracking can be used to drive a motorized platform in coordination with a virtual environment and helping reproduce part of the dynamic feeling of real surfing.</p>
+<p>The main outcomes included:</p>
+<ul>
+<li>a <strong>MediaPipe-based full-body and hand-joint tracking system</strong> for VR interaction,</li>
+<li>a control method that combines <strong>hand motion</strong> and <strong>virtual water-level changes</strong>,</li>
+<li>a real-time interface between the virtual surfing environment and a <strong>motorized mechanical surfboard</strong>,</li>
+<li>and a prototype immersive experience designed to simulate the kinesthetic feel of surfing.</li>
+</ul>
+<p>More broadly, the project showed how <strong>computer vision</strong>, <strong>VR interaction</strong>, and <strong>human-centered control design</strong> can be combined to create embodied motion experiences beyond standard controller-based interfaces.</p>
+<video controls preload="metadata" style="width:100%;border-radius:16px;margin-top:1rem;">
+  <source src="surfing.MOV" type="video/quicktime">
+</video>
+<p><em>VR surfing board system in operation.</em></p>
+
+    </div>
+
+    
+    <div class="article-tags">
+      
+      
+      <a class="badge badge-light" href="/tag/virtual-reality/">Virtual Reality</a>
+      
+      
+      <a class="badge badge-light" href="/tag/human-computer-interaction/">Human-Computer Interaction</a>
+      
+      
+      <a class="badge badge-light" href="/tag/computer-vision/">Computer Vision</a>
+      
+      
+      <a class="badge badge-light" href="/tag/motion-tracking/">Motion Tracking</a>
+      
+    </div>
+    
+  </div>
+
+  <div class="article-footer-container">
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/virtual-reality/">Virtual Reality</a>
+  
+  <a class="badge badge-light" href="/tag/human-computer-interaction/">Human-Computer Interaction</a>
+  
+  <a class="badge badge-light" href="/tag/computer-vision/">Computer Vision</a>
+  
+  <a class="badge badge-light" href="/tag/motion-tracking/">Motion Tracking</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://isanshi.github.io"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu99d28a0920b2a83c958e719312d38dcc_1346639_270x270_fill_lanczos_center_3.png" alt="Rongtao Zhang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://isanshi.github.io">Rongtao Zhang</a></h5>
+      <h6 class="card-subtitle">张镕韬</h6>
+      <p class="card-text">Robotics researcher at Peking University.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/Rongtao_Zhang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/iSanshi" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://orcid.org/0009-0001-2648-8863" target="_blank" rel="noopener">
+        <i class="ai ai-orcid"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/rongtao-zhang/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/media/wechat-qr.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+</div>
+  </div>
+
+  <div class="page-footer">
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023-2026 Rongtao Zhang | Per aspera ad astra
+  </p>
+  
+
+
+
+
+
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  <script src="/js/vendor/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/en/js/wowchemy.min.700931f83214c587b17bf85d1033c18c.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

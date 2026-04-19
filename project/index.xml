@@ -5,7 +5,7 @@
     <link>https://isanshi.github.io/project/</link>
       <atom:link href="https://isanshi.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 20 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 16 Feb 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://isanshi.github.io/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_512x512_fill_lanczos_center_3.png</url>
       <title>Projects</title>
@@ -13,50 +13,124 @@
     </image>
     
     <item>
-      <title>Personalizing Haptic Feedback via Uncertainty-Aware Preference Learning</title>
-      <link>https://isanshi.github.io/project/phs/</link>
-      <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://isanshi.github.io/project/phs/</guid>
-      <description>&lt;h2 id=&#34;abstract&#34;&gt;&lt;strong&gt;Abstract&lt;/strong&gt;&lt;/h2&gt;
-&lt;p&gt;Personalizing haptic feedback is difficult because users struggle to assign absolute satisfaction scores. We introduce a preference-based method that infers a user’s latent utility surface from binary pairwise comparisons (A/B choices). A Gaussian Process (GP) preference model encodes smoothness and posterior uncertainty over the stimulus space, while an active query policy selects comparisons by maximizing expected information gain. We incorporate self-reported response uncertainty as per-comparison weights to down-weight ambiguous judgments. By emphasizing relative rather than absolute evaluations, the system mitigates rating fatigue and drift and avoids forcing users to map tactile sensations onto a numeric scale. In simulation with synthetic ground-truth preferences, the method accurately recovers preference maps and optima, achieving higher sample efficiency than uniform/query-agnostic sampling. We also release an open-source framework for interactive preference search over haptic signals.&lt;/p&gt;
-&lt;h2 id=&#34;contributions&#34;&gt;&lt;strong&gt;Contributions&lt;/strong&gt;&lt;/h2&gt;
+      <title>VR Surfing Hand-Tracking Control</title>
+      <link>https://isanshi.github.io/project/vrsurfing/</link>
+      <pubDate>Sun, 16 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://isanshi.github.io/project/vrsurfing/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;&lt;strong&gt;Overview&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project explores &lt;strong&gt;VR surfing interaction&lt;/strong&gt; with a &lt;strong&gt;VR headset&lt;/strong&gt; and a &lt;strong&gt;motorized mechanical surfboard platform&lt;/strong&gt; designed to simulate the body motion of real surfing. The main goal was to create a more immersive and physically engaging surfing experience by combining virtual-environment feedback with real-time body tracking and motion control.&lt;/p&gt;
+&lt;p&gt;The project was completed in collaboration with &lt;strong&gt;Premankur Banerjee&lt;/strong&gt;, and was advised by &lt;a href=&#34;https://viterbi.usc.edu/directory/faculty/Culbertson/Heather&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Heather Culbertson&lt;/a&gt; and &lt;a href=&#34;https://ampl.usc.edu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Jason Kutch&lt;/a&gt; at &lt;strong&gt;USC&lt;/strong&gt;.&lt;/p&gt;
+&lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
+  &lt;source src=&#34;env.MOV&#34; type=&#34;video/quicktime&#34;&gt;
+&lt;/video&gt;
+&lt;p&gt;&lt;em&gt;Experimental environment for the VR surfing setup.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;system-design-and-results&#34;&gt;&lt;strong&gt;System Design and Results&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The overall system integrated &lt;strong&gt;visual perception&lt;/strong&gt;, &lt;strong&gt;motion interpretation&lt;/strong&gt;, and &lt;strong&gt;physical actuation&lt;/strong&gt; into one interactive loop. The &lt;strong&gt;VR headset&lt;/strong&gt; provided the immersive surfing scene and real-time environmental feedback, while the &lt;strong&gt;hand-tracking module&lt;/strong&gt; extracted user motion from joint landmarks. The control logic mapped hand movement and virtual water-level variation to board commands, and a &lt;strong&gt;controllable mechanical surfboard&lt;/strong&gt; executed the commanded movement to reproduce wave-like motion.&lt;/p&gt;
+&lt;p&gt;To enable natural interaction, we built a &lt;strong&gt;MediaPipe-based full-body joint tracking system&lt;/strong&gt; with a particular focus on &lt;strong&gt;hand landmark detection&lt;/strong&gt;. The user’s hand motion was interpreted together with changes in the virtual environment’s &lt;strong&gt;water level&lt;/strong&gt;, and this relationship was used to control the movement of the surfing board. By coupling perception and actuation in real time, the project created a closed-loop VR control system that translated body motion into physical surfing feedback.&lt;/p&gt;
+&lt;p&gt;The project produced a working prototype for &lt;strong&gt;hand-tracking-based VR surfboard control&lt;/strong&gt;, demonstrating that body-joint tracking can be used to drive a motorized platform in coordination with a virtual environment and helping reproduce part of the dynamic feeling of real surfing.&lt;/p&gt;
+&lt;p&gt;The main outcomes included:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;A binary, preference-driven learning approach to haptic personalization that reduces user fatigue and rating drift.&lt;/li&gt;
-&lt;li&gt;An interaction loop that weights comparisons by user-reported uncertainty to improve search efficiency.&lt;/li&gt;
-&lt;li&gt;An open-source, extensible code framework for interactive preference search over haptic signals.&lt;/li&gt;
+&lt;li&gt;a &lt;strong&gt;MediaPipe-based full-body and hand-joint tracking system&lt;/strong&gt; for VR interaction,&lt;/li&gt;
+&lt;li&gt;a control method that combines &lt;strong&gt;hand motion&lt;/strong&gt; and &lt;strong&gt;virtual water-level changes&lt;/strong&gt;,&lt;/li&gt;
+&lt;li&gt;a real-time interface between the virtual surfing environment and a &lt;strong&gt;motorized mechanical surfboard&lt;/strong&gt;,&lt;/li&gt;
+&lt;li&gt;and a prototype immersive experience designed to simulate the kinesthetic feel of surfing.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;demo&#34;&gt;&lt;strong&gt;Demo&lt;/strong&gt;&lt;/h2&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;UI&#34; srcset=&#34;
-               /project/phs/image_hu3f729e23a8465e3ef5908d8edf60c968_670270_8ed6879aead2a28523715aa489193d97.webp 400w,
-               /project/phs/image_hu3f729e23a8465e3ef5908d8edf60c968_670270_bbb4d5bcc3f3ace9bcc30073c6a167ba.webp 760w,
-               /project/phs/image_hu3f729e23a8465e3ef5908d8edf60c968_670270_1200x1200_fit_q100_h2_lanczos_3.webp 1200w&#34;
-               src=&#34;https://isanshi.github.io/project/phs/image_hu3f729e23a8465e3ef5908d8edf60c968_670270_8ed6879aead2a28523715aa489193d97.webp&#34;
-               width=&#34;760&#34;
-               height=&#34;448&#34;
-               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;acknowledgments&#34;&gt;&lt;strong&gt;Acknowledgments&lt;/strong&gt;&lt;/h2&gt;
-&lt;p&gt;This work is being conducted under the guidance of &lt;a href=&#34;https://www.cs.usc.edu/directory/faculty/profile/?lname=Culbertson&amp;fname=Heather&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Dr. Heather Culbertson&lt;/strong&gt;&lt;/a&gt; and &lt;a href=&#34;https://ebiyik.github.io&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Dr. Erdem Bıyık&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;More broadly, the project showed how &lt;strong&gt;computer vision&lt;/strong&gt;, &lt;strong&gt;VR interaction&lt;/strong&gt;, and &lt;strong&gt;human-centered control design&lt;/strong&gt; can be combined to create embodied motion experiences beyond standard controller-based interfaces.&lt;/p&gt;
+&lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
+  &lt;source src=&#34;surfing.MOV&#34; type=&#34;video/quicktime&#34;&gt;
+&lt;/video&gt;
+&lt;p&gt;&lt;em&gt;VR surfing board system in operation.&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Target Alignment for a Robotic Arm via Reinforcement Learning</title>
+      <link>https://isanshi.github.io/project/arm-alignment-rl/</link>
+      <pubDate>Sat, 15 Apr 2023 00:00:00 +0000</pubDate>
+      <guid>https://isanshi.github.io/project/arm-alignment-rl/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;&lt;strong&gt;Overview&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project studies robotic target alignment with reinforcement learning. The goal is to control a UR5 manipulator to align its end-effector with a target object of unknown pose. The work was completed as a team project with &lt;strong&gt;Jianlin Ye&lt;/strong&gt;, &lt;strong&gt;Guanyu Yao&lt;/strong&gt;, and &lt;strong&gt;Fangzhou Ye&lt;/strong&gt;, advised by &lt;a href=&#34;http://faculty.bjtu.edu.cn/7904/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Prof. Sheng Han&lt;/a&gt; and &lt;a href=&#34;https://faculty.bjtu.edu.cn/10107/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Prof. Kai Lv&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;approach&#34;&gt;&lt;strong&gt;Approach&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;We built a task-specific simulation environment for the alignment problem, with multimodal observations including RGB, depth, and robot state. To make learning more effective, the method combined structured visual features, imitation learning, curriculum learning, and a PPO-based control policy.&lt;/p&gt;
+&lt;div style=&#34;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;align-items:start;&#34;&gt;
+  &lt;div&gt;
+    &lt;img src=&#34;ur5-model.png&#34; alt=&#34;UR5 model&#34; style=&#34;border-radius:14px;&#34;&gt;
+    &lt;p&gt;&lt;em&gt;UR5 manipulator model used in the environment.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;img src=&#34;target-model.png&#34; alt=&#34;Target object model&#34; style=&#34;border-radius:14px;&#34;&gt;
+    &lt;p&gt;&lt;em&gt;Target object model for alignment.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
+  &lt;source src=&#34;https://isanshi.github.io/uploads/arm-alignment-videos/simulation-demo.mp4&#34; type=&#34;video/mp4&#34;&gt;
+&lt;/video&gt;
+&lt;p&gt;&lt;em&gt;Simulation demo of the alignment environment and control process.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;results&#34;&gt;&lt;strong&gt;Results&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The project produced a working simulation environment, a visual representation for alignment, and a PPO-based policy for the task. We also validated the setup with physical-system experiments.&lt;/p&gt;
+&lt;div style=&#34;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;align-items:start;&#34;&gt;
+  &lt;div&gt;
+    &lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:14px;&#34;&gt;
+      &lt;source src=&#34;https://isanshi.github.io/uploads/arm-alignment-videos/simulation-closeup.mp4&#34; type=&#34;video/mp4&#34;&gt;
+    &lt;/video&gt;
+    &lt;p&gt;&lt;em&gt;Close-up simulation clip.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:14px;&#34;&gt;
+      &lt;source src=&#34;https://isanshi.github.io/uploads/arm-alignment-videos/physical-demo.mp4&#34; type=&#34;video/mp4&#34;&gt;
+    &lt;/video&gt;
+    &lt;p&gt;&lt;em&gt;Physical-system demo.&lt;/em&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Brake Shoe Life Prediction and Health Management for Railway Freight Cars</title>
+      <link>https://isanshi.github.io/project/ie/</link>
+      <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
+      <guid>https://isanshi.github.io/project/ie/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;&lt;strong&gt;Overview&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project was developed for the &lt;strong&gt;2022 China University Mechanical Engineering Innovation and Creativity Competition&lt;/strong&gt; in the &lt;strong&gt;Industrial Engineering and Lean Management Innovation Track&lt;/strong&gt;. The work focused on &lt;strong&gt;railway freight-car brake shoes&lt;/strong&gt;, aiming to improve maintenance efficiency and safety through data analysis, degradation modeling, and maintenance decision support.&lt;/p&gt;
+&lt;p&gt;Instead of relying only on manual inspection and reactive replacement, the project explored a more structured maintenance workflow: collect detailed wear data, model brake-shoe degradation at both the population and individual levels, and use simulation-based evaluation to support concentrated maintenance decisions.&lt;/p&gt;
+&lt;h2 id=&#34;problem&#34;&gt;&lt;strong&gt;Problem&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Freight-car brake shoes are safety-critical components, but their maintenance is often costly, labor-intensive, and weakly supported by quantitative models. The team identified several practical issues during field-oriented investigation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Brake-shoe replacement work occupied substantial inspection time.&lt;/li&gt;
+&lt;li&gt;Existing maintenance decisions relied heavily on visual estimation and experience.&lt;/li&gt;
+&lt;li&gt;Wear data were incomplete and difficult to use systematically.&lt;/li&gt;
+&lt;li&gt;Brake-shoe degradation showed strong individual variation, making fixed replacement rules inefficient.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These issues created a tension between &lt;strong&gt;batch maintenance efficiency&lt;/strong&gt; and &lt;strong&gt;individualized maintenance accuracy&lt;/strong&gt;, which is a classic industrial-engineering decision problem.&lt;/p&gt;
+&lt;h2 id=&#34;approach&#34;&gt;&lt;strong&gt;Approach&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The project combined &lt;strong&gt;data-driven analysis&lt;/strong&gt; and &lt;strong&gt;model-driven decision support&lt;/strong&gt; into one workflow.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multi-year field investigation and data collection were carried out with railway maintenance-related organizations.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;generalized linear model&lt;/strong&gt; was used to describe overall degradation trends.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;linear mixed-effects model&lt;/strong&gt; was introduced to capture individual wear differences.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monte Carlo simulation&lt;/strong&gt; was used to compare candidate maintenance strategies under multiple performance criteria.&lt;/li&gt;
+&lt;li&gt;A lightweight &lt;strong&gt;visual analytics platform&lt;/strong&gt; was built to connect data access, degradation prediction, and maintenance decision support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&#34;max-width: 1040px; margin: 1rem auto 1.25rem;&#34;&gt;
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;Integrated platform for brake-shoe degradation analysis and maintenance decision support&#34; style=&#34;width: 100%; height: auto; display: block; border-radius: 16px;&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;The resulting system linked data management, degradation prediction, simulation-based evaluation, and maintenance planning into one integrated interface.&lt;/p&gt;
+&lt;h2 id=&#34;outcomes&#34;&gt;&lt;strong&gt;Outcomes&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The project proposed a practical path from &lt;strong&gt;reactive maintenance&lt;/strong&gt; toward &lt;strong&gt;planned and condition-aware maintenance&lt;/strong&gt; for railway freight cars. According to the competition presentation, the work demonstrated:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a predictive framework for brake-shoe life and wear analysis,&lt;/li&gt;
+&lt;li&gt;decision support for selecting concentrated maintenance schemes,&lt;/li&gt;
+&lt;li&gt;a deployable visualization platform for engineering use,&lt;/li&gt;
+&lt;li&gt;and measurable potential in reducing maintenance burden, lowering cost, and improving safety.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More broadly, the project showed how &lt;strong&gt;industrial engineering methods&lt;/strong&gt; can be applied to a real transportation-maintenance problem by combining field data, statistical modeling, simulation, and system design.&lt;/p&gt;
+&lt;h2 id=&#34;news-coverage&#34;&gt;&lt;strong&gt;News Coverage&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;A related news report is available from &lt;strong&gt;Beijing Jiaotong University News&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://news.bjtu.edu.cn/info/1014/43305.htm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;我校本科生获工业工程与精益管理创新赛全国二等奖&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;acknowledgements&#34;&gt;&lt;strong&gt;Acknowledgements&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project was completed in collaboration with &lt;strong&gt;jiayi sun&lt;/strong&gt;, &lt;strong&gt;rihan hai&lt;/strong&gt;, and &lt;strong&gt;chenxiao fu&lt;/strong&gt;, under the supervision of &lt;strong&gt;qi li&lt;/strong&gt; and &lt;strong&gt;mingcheng e&lt;/strong&gt;.&lt;/p&gt;
 </description>
     </item>
     

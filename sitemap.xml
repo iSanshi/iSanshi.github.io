@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://isanshi.github.io/tag/haptic-intelligence/</loc>
-    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
+    <loc>https://isanshi.github.io/tag/haptics/</loc>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://isanshi.github.io/tag/human-robot-interaction/</loc>
-    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://isanshi.github.io/project/phs/</loc>
-    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
+    <loc>https://isanshi.github.io/tag/machine-learning/</loc>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://isanshi.github.io/tag/preference-learning/</loc>
-    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://isanshi.github.io/project/</loc>
-    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
+    <loc>https://isanshi.github.io/publication/</loc>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://isanshi.github.io/tags/</loc>
-    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/publication/vpl/</loc>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://isanshi.github.io/categories/</loc>
@@ -46,11 +46,60 @@
     <lastmod>2025-07-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://isanshi.github.io/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+    <loc>https://isanshi.github.io/tag/computer-vision/</loc>
+    <lastmod>2025-02-16T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://isanshi.github.io/admin/</loc>
+    <loc>https://isanshi.github.io/tag/human-computer-interaction/</loc>
+    <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/motion-tracking/</loc>
+    <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/project/</loc>
+    <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/virtual-reality/</loc>
+    <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/project/vrsurfing/</loc>
+    <lastmod>2025-02-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/reinforcement-learning/</loc>
+    <lastmod>2023-04-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/robotics/</loc>
+    <lastmod>2023-04-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/project/arm-alignment-rl/</loc>
+    <lastmod>2023-04-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/project/ie/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/industrial-engineering/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/predictive-maintenance/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/tag/railway-systems/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://isanshi.github.io/</loc>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://isanshi.github.io/publication_types/</loc>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Industrial Engineering | Rongtao Zhang</title>
+    <link>https://isanshi.github.io/tag/industrial-engineering/</link>
+      <atom:link href="https://isanshi.github.io/tag/industrial-engineering/index.xml" rel="self" type="application/rss+xml" />
+    <description>Industrial Engineering</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://isanshi.github.io/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_512x512_fill_lanczos_center_3.png</url>
+      <title>Industrial Engineering</title>
+      <link>https://isanshi.github.io/tag/industrial-engineering/</link>
+    </image>
+    
+    <item>
+      <title>Brake Shoe Life Prediction and Health Management for Railway Freight Cars</title>
+      <link>https://isanshi.github.io/project/ie/</link>
+      <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
+      <guid>https://isanshi.github.io/project/ie/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;&lt;strong&gt;Overview&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project was developed for the &lt;strong&gt;2022 China University Mechanical Engineering Innovation and Creativity Competition&lt;/strong&gt; in the &lt;strong&gt;Industrial Engineering and Lean Management Innovation Track&lt;/strong&gt;. The work focused on &lt;strong&gt;railway freight-car brake shoes&lt;/strong&gt;, aiming to improve maintenance efficiency and safety through data analysis, degradation modeling, and maintenance decision support.&lt;/p&gt;
+&lt;p&gt;Instead of relying only on manual inspection and reactive replacement, the project explored a more structured maintenance workflow: collect detailed wear data, model brake-shoe degradation at both the population and individual levels, and use simulation-based evaluation to support concentrated maintenance decisions.&lt;/p&gt;
+&lt;h2 id=&#34;problem&#34;&gt;&lt;strong&gt;Problem&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Freight-car brake shoes are safety-critical components, but their maintenance is often costly, labor-intensive, and weakly supported by quantitative models. The team identified several practical issues during field-oriented investigation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Brake-shoe replacement work occupied substantial inspection time.&lt;/li&gt;
+&lt;li&gt;Existing maintenance decisions relied heavily on visual estimation and experience.&lt;/li&gt;
+&lt;li&gt;Wear data were incomplete and difficult to use systematically.&lt;/li&gt;
+&lt;li&gt;Brake-shoe degradation showed strong individual variation, making fixed replacement rules inefficient.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These issues created a tension between &lt;strong&gt;batch maintenance efficiency&lt;/strong&gt; and &lt;strong&gt;individualized maintenance accuracy&lt;/strong&gt;, which is a classic industrial-engineering decision problem.&lt;/p&gt;
+&lt;h2 id=&#34;approach&#34;&gt;&lt;strong&gt;Approach&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The project combined &lt;strong&gt;data-driven analysis&lt;/strong&gt; and &lt;strong&gt;model-driven decision support&lt;/strong&gt; into one workflow.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multi-year field investigation and data collection were carried out with railway maintenance-related organizations.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;generalized linear model&lt;/strong&gt; was used to describe overall degradation trends.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;linear mixed-effects model&lt;/strong&gt; was introduced to capture individual wear differences.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monte Carlo simulation&lt;/strong&gt; was used to compare candidate maintenance strategies under multiple performance criteria.&lt;/li&gt;
+&lt;li&gt;A lightweight &lt;strong&gt;visual analytics platform&lt;/strong&gt; was built to connect data access, degradation prediction, and maintenance decision support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&#34;max-width: 1040px; margin: 1rem auto 1.25rem;&#34;&gt;
+  &lt;img src=&#34;featured.jpg&#34; alt=&#34;Integrated platform for brake-shoe degradation analysis and maintenance decision support&#34; style=&#34;width: 100%; height: auto; display: block; border-radius: 16px;&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;The resulting system linked data management, degradation prediction, simulation-based evaluation, and maintenance planning into one integrated interface.&lt;/p&gt;
+&lt;h2 id=&#34;outcomes&#34;&gt;&lt;strong&gt;Outcomes&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The project proposed a practical path from &lt;strong&gt;reactive maintenance&lt;/strong&gt; toward &lt;strong&gt;planned and condition-aware maintenance&lt;/strong&gt; for railway freight cars. According to the competition presentation, the work demonstrated:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a predictive framework for brake-shoe life and wear analysis,&lt;/li&gt;
+&lt;li&gt;decision support for selecting concentrated maintenance schemes,&lt;/li&gt;
+&lt;li&gt;a deployable visualization platform for engineering use,&lt;/li&gt;
+&lt;li&gt;and measurable potential in reducing maintenance burden, lowering cost, and improving safety.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More broadly, the project showed how &lt;strong&gt;industrial engineering methods&lt;/strong&gt; can be applied to a real transportation-maintenance problem by combining field data, statistical modeling, simulation, and system design.&lt;/p&gt;
+&lt;h2 id=&#34;news-coverage&#34;&gt;&lt;strong&gt;News Coverage&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;A related news report is available from &lt;strong&gt;Beijing Jiaotong University News&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://news.bjtu.edu.cn/info/1014/43305.htm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;我校本科生获工业工程与精益管理创新赛全国二等奖&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;acknowledgements&#34;&gt;&lt;strong&gt;Acknowledgements&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This project was completed in collaboration with &lt;strong&gt;jiayi sun&lt;/strong&gt;, &lt;strong&gt;rihan hai&lt;/strong&gt;, and &lt;strong&gt;chenxiao fu&lt;/strong&gt;, under the supervision of &lt;strong&gt;qi li&lt;/strong&gt; and &lt;strong&gt;mingcheng e&lt;/strong&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

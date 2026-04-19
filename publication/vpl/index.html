@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<!-- Last Published: April 20, 2026 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/vendor/main.min.css" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.10f8b14d1102956488b534af5f6c1fe9.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Rongtao Zhang" />
+
+
+
+
+
+  
+
+<meta name="description" content="A confidence-aware preference learning framework for personalizing vibrotactile feedback with pairwise comparisons." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://isanshi.github.io/publication/vpl/" />
+<link rel="canonical" href="https://isanshi.github.io/publication/vpl/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="rgb(102, 25, 36)" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://isanshi.github.io/publication/vpl/featured.png" />
+<meta property="og:site_name" content="Rongtao Zhang" />
+<meta property="og:url" content="https://isanshi.github.io/publication/vpl/" />
+<meta property="og:title" content="Vibrotactile Preference Learning: Uncertainty-Aware Preference Learning for Personalized Vibration Feedback | Rongtao Zhang" />
+<meta property="og:description" content="A confidence-aware preference learning framework for personalizing vibrotactile feedback with pairwise comparisons." /><meta property="og:image" content="https://isanshi.github.io/publication/vpl/featured.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2026-04-12T00:00:00&#43;00:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2026-03-01T00:00:00&#43;00:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://isanshi.github.io/publication/vpl/"
+  },
+  "headline": "Vibrotactile Preference Learning: Uncertainty-Aware Preference Learning for Personalized Vibration Feedback",
+  
+  "image": [
+    "https://isanshi.github.io/publication/vpl/featured.png"
+  ],
+  
+  "datePublished": "2026-04-12T00:00:00Z",
+  "dateModified": "2026-03-01T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Rongtao Zhang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Rongtao Zhang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://isanshi.github.io/media/icon_hu0abe02584a566683a89c96345314bcf2_17128_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "A confidence-aware preference learning framework for personalizing vibrotactile feedback with pairwise comparisons."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Vibrotactile Preference Learning: Uncertainty-Aware Preference Learning for Personalized Vibration Feedback | Rongtao Zhang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <meta name="theme-color" content="rgb(102, 25, 36)">
+<script defer src="/js/vendor/imagesloaded.pkgd.min.js"></script>
+<script defer src="/js/vendor/isotope.pkgd.min.js"></script>
+<link rel="stylesheet" href="/css/custom-site.css">
+<script defer src="/js/custom-site.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="322781b738504ea63b9c1bafebb15f98" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ca4855e912c8b548167ece2aaed3e019.js"></script>
+
+  
+
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Rongtao Zhang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Rongtao Zhang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#publications"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#experience"><span>Experience</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+<div class="pub">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1>Vibrotactile Preference Learning: Uncertainty-Aware Preference Learning for Personalized Vibration Feedback</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    <span ><a href="/"><strong class="author-self">Rongtao Zhang</strong></a></span>, <span ><a href="https://xinzhu.us" target="_blank" rel="noopener">Xin Zhu</a></span>, <span >Masoume Pourebadi Khotbehsara</span>, <span >Warren Dao</span>, <span ><a href="https://ebiyik.github.io/" target="_blank" rel="noopener">Erdem Biyik</a></span>, <span ><a href="https://sites.usc.edu/culbertson/" target="_blank" rel="noopener">Heather Culbertson</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    March, 2026
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+<a class="btn btn-outline-primary btn-page-header" href="/publication/vpl/VPL_UMAP26.pdf" target="_blank" rel="noopener">
+  PDF
+</a>
+
+
+
+
+  
+  
+    
+  
+<a class="btn btn-outline-primary btn-page-header" href="https://github.com/HaRVI-Lab/vibrotactile-preference-learning" target="_blank" rel="noopener">
+  Code
+</a>
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 346px;">
+  <div style="position: relative">
+    <img src="/publication/vpl/featured_huf442b3c1bb701f7583af5abea7dfe2ae_849768_720x2500_fit_q100_h2_lanczos_3.webp" width="720" height="346" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+  <script id="publication-page-config" type="application/json">
+    "{\"author_links\":[\"/\",\"https://xinzhu.us\",\"\",\"\",\"https://ebiyik.github.io/\",\"https://sites.usc.edu/culbertson/\"],\"authors\":[\"admin\",\"Xin Zhu\",\"Masoume Pourebadi Khotbehsara\",\"Warren Dao\",\"Erdem Biyik\",\"Heather Culbertson\"]}"
+  </script>
+
+  <div class="article-container">
+
+    
+    <h3>Abstract</h3>
+    <p class="pub-abstract">Individual differences in vibrotactile perception make personalization increasingly important as haptic feedback becomes more prevalent in interactive systems. We propose Vibrotactile Preference Learning (VPL), a confidence-aware preference learning framework that uses Gaussian-process-based preference modeling, expected information gain for active query selection, and user-reported uncertainty to efficiently personalize vibration feedback. In a user study with vibrotactile signals on a Microsoft Xbox controller, VPL learns individualized preferences within 40 pairwise comparisons while maintaining comfortable, low-workload interaction.</p>
+    
+
+    
+
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Publication</div>
+          <div class="col-12 col-md-9">In <em>Proceedings of the 34th ACM Conference on User Modeling, Adaptation and Personalization (UMAP 2026)</em></div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    <div class="space-below"></div>
+
+    <div class="article-style"><p>Personalizing vibration feedback is difficult because tactile preferences vary substantially across users, while absolute rating interfaces are tiring, unstable, and hard to calibrate over long sessions. This paper introduces <strong>Vibrotactile Preference Learning (VPL)</strong>, an interactive system that learns a user&rsquo;s preferred vibration signal from <strong>pairwise A/B comparisons</strong> instead of numeric ratings.</p>
+<p>VPL combines three ideas:</p>
+<ul>
+<li><strong>Pairwise preference learning</strong> to reduce rating drift and cognitive burden.</li>
+<li><strong>Confidence-aware modeling</strong> so that uncertain user judgments are weighted differently from confident ones.</li>
+<li><strong>Active query selection</strong> based on expected information gain to make each comparison maximally useful.</li>
+</ul>
+<p>The system is implemented on a <strong>Microsoft Xbox controller</strong> and searches over a four-dimensional vibrotactile parameter space. After each comparison, the model updates its estimate of the user&rsquo;s latent preference function and selects the next most informative pair to present.</p>
+<h2 id="system-overview">System Overview</h2>
+<div style="max-width: 1040px; margin: 0 auto 1.25rem;">
+  <img src="system_overview.png" alt="System overview" style="width: 100%; height: auto; display: block;">
+</div>
+<p>The interface presents two candidate vibration signals, asks the user which one they prefer, and also asks how certain they are about that choice. These responses update a Gaussian process preference model, which is then used to propose the next comparison and eventually recommend a personalized vibration signal.</p>
+<h2 id="why-this-matters">Why This Matters</h2>
+<p>Most practical haptic systems still rely on fixed vibration presets or manual slider tuning. That is problematic because users differ in perception, comfort, and preference, and many non-expert users do not understand parameters such as intensity or rhythm well enough to tune them directly.</p>
+<p>VPL reframes personalization as a short interactive learning process. Instead of asking users to search a high-dimensional design space themselves, the system guides them through a bounded set of comparisons and automatically infers a personalized solution.</p>
+<h2 id="potential-applications">Potential Applications</h2>
+<div style="max-width: 980px; margin: 0 auto 1.25rem;">
+  <img src="application_overview.png" alt="Illustrative applications of personalized vibrotactile feedback" style="width: 100%; height: auto; display: block;">
+</div>
+<p>The paper highlights several application settings where personalized vibrotactile feedback could be valuable, including VR and AR interaction, affective haptics, accessibility, mobile and wearable notifications, rehabilitation, and automotive interfaces. In each of these settings, the key challenge is the same: a fixed vibration pattern may not produce the intended user experience across different people, contexts, or tasks.</p>
+<h2 id="main-contributions">Main Contributions</h2>
+<ul>
+<li>A <strong>confidence-aware Gaussian process preference model</strong> for learning personalized vibrotactile utility functions.</li>
+<li>An <strong>information-gain-based active querying strategy</strong> that improves data efficiency under a limited interaction budget.</li>
+<li>A <strong>user study with 13 participants</strong> showing that the method can produce satisfying personalized recommendations within <strong>40 comparisons</strong>.</li>
+</ul>
+<!-- ## Resources
+
+- [Paper PDF](/publication/vibrotactile-preference-learning/VPL_UMAP26.pdf)
+- [Code Repository](https://github.com/HaRVI-Lab/vibrotactile-preference-learning)
+- [DOI](https://doi.org/10.1145/3774935.3806784) -->
+</div>
+
+    
+    <div class="article-tags">
+      
+      
+      <a class="badge badge-light" href="/tag/machine-learning/">Machine Learning</a>
+      
+      
+      <a class="badge badge-light" href="/tag/preference-learning/">Preference Learning</a>
+      
+      
+      <a class="badge badge-light" href="/tag/haptics/">Haptics</a>
+      
+    </div>
+    
+
+  </div>
+
+  <div class="article-footer-container">
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/machine-learning/">Machine Learning</a>
+  
+  <a class="badge badge-light" href="/tag/preference-learning/">Preference Learning</a>
+  
+  <a class="badge badge-light" href="/tag/haptics/">Haptics</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://isanshi.github.io"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu99d28a0920b2a83c958e719312d38dcc_1346639_270x270_fill_lanczos_center_3.png" alt="Rongtao Zhang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://isanshi.github.io">Rongtao Zhang</a></h5>
+      <h6 class="card-subtitle">张镕韬</h6>
+      <p class="card-text">Robotics researcher at Peking University.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/Rongtao_Zhang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/iSanshi" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://orcid.org/0009-0001-2648-8863" target="_blank" rel="noopener">
+        <i class="ai ai-orcid"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/rongtao-zhang/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/media/wechat-qr.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+  </div>
+
+  <div class="page-footer">
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023-2026 Rongtao Zhang | Per aspera ad astra
+  </p>
+  
+
+
+
+
+
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  <script src="/js/vendor/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/en/js/wowchemy.min.700931f83214c587b17bf85d1033c18c.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
