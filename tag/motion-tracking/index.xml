@@ -27,6 +27,10 @@
 &lt;h2 id=&#34;system-design-and-results&#34;&gt;&lt;strong&gt;System Design and Results&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;The overall system integrated &lt;strong&gt;visual perception&lt;/strong&gt;, &lt;strong&gt;motion interpretation&lt;/strong&gt;, and &lt;strong&gt;physical actuation&lt;/strong&gt; into one interactive loop. The &lt;strong&gt;VR headset&lt;/strong&gt; provided the immersive surfing scene and real-time environmental feedback, while the &lt;strong&gt;hand-tracking module&lt;/strong&gt; extracted user motion from joint landmarks. The control logic mapped hand movement and virtual water-level variation to board commands, and a &lt;strong&gt;controllable mechanical surfboard&lt;/strong&gt; executed the commanded movement to reproduce wave-like motion.&lt;/p&gt;
 &lt;p&gt;To enable natural interaction, we built a &lt;strong&gt;MediaPipe-based full-body joint tracking system&lt;/strong&gt; with a particular focus on &lt;strong&gt;hand landmark detection&lt;/strong&gt;. The user’s hand motion was interpreted together with changes in the virtual environment’s &lt;strong&gt;water level&lt;/strong&gt;, and this relationship was used to control the movement of the surfing board. By coupling perception and actuation in real time, the project created a closed-loop VR control system that translated body motion into physical surfing feedback.&lt;/p&gt;
+&lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
+  &lt;source src=&#34;detector.mp4&#34; type=&#34;video/mp4&#34;&gt;
+&lt;/video&gt;
+&lt;p&gt;&lt;em&gt;Full-body joint detection and tracking demonstration.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;The project produced a working prototype for &lt;strong&gt;hand-tracking-based VR surfboard control&lt;/strong&gt;, demonstrating that body-joint tracking can be used to drive a motorized platform in coordination with a virtual environment and helping reproduce part of the dynamic feeling of real surfing.&lt;/p&gt;
 &lt;p&gt;The main outcomes included:&lt;/p&gt;
 &lt;ul&gt;

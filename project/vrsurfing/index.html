@@ -717,6 +717,10 @@
 <h2 id="system-design-and-results"><strong>System Design and Results</strong></h2>
 <p>The overall system integrated <strong>visual perception</strong>, <strong>motion interpretation</strong>, and <strong>physical actuation</strong> into one interactive loop. The <strong>VR headset</strong> provided the immersive surfing scene and real-time environmental feedback, while the <strong>hand-tracking module</strong> extracted user motion from joint landmarks. The control logic mapped hand movement and virtual water-level variation to board commands, and a <strong>controllable mechanical surfboard</strong> executed the commanded movement to reproduce wave-like motion.</p>
 <p>To enable natural interaction, we built a <strong>MediaPipe-based full-body joint tracking system</strong> with a particular focus on <strong>hand landmark detection</strong>. The user’s hand motion was interpreted together with changes in the virtual environment’s <strong>water level</strong>, and this relationship was used to control the movement of the surfing board. By coupling perception and actuation in real time, the project created a closed-loop VR control system that translated body motion into physical surfing feedback.</p>
+<video controls preload="metadata" style="width:100%;border-radius:16px;margin-top:1rem;">
+  <source src="detector.mp4" type="video/mp4">
+</video>
+<p><em>Full-body joint detection and tracking demonstration.</em></p>
 <p>The project produced a working prototype for <strong>hand-tracking-based VR surfboard control</strong>, demonstrating that body-joint tracking can be used to drive a motorized platform in coordination with a virtual environment and helping reproduce part of the dynamic feeling of real surfing.</p>
 <p>The main outcomes included:</p>
 <ul>
