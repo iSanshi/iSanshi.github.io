@@ -138,6 +138,25 @@ a:hover,
   cursor: pointer;
 }
 
+.equal-contrib-symbol {
+  font-size: 0.75em;
+  margin-left: 0.08rem;
+  top: -0.25em;
+}
+
+.author-affiliation-symbol {
+  font-size: 0.75em;
+  margin-left: 0.08rem;
+  top: -0.25em;
+}
+
+.equal-contrib-note {
+  color: var(--site-muted);
+  font-size: 0.86rem;
+  line-height: 1.35;
+  margin: -0.2rem 0 0.35rem;
+}
+
 .portrait-title a,
 .portrait-title h3 a,
 .article-style .institution,

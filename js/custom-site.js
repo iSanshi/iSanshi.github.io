@@ -49,12 +49,31 @@ function initPublicationPage() {
   const authors = config.authors || [];
 
   if (authorContainer && authors.length) {
+    const markEqualContribution = window.location.pathname.includes('/publication/vpl/');
     authorContainer.innerHTML = authors.map((name, index) => {
       const label = name === 'admin' ? 'Rongtao Zhang' : name;
       const href = authorLinks[index] || (name === 'admin' ? '/' : '');
-      const content = label === 'Rongtao Zhang' ? `<strong class="author-self">${label}</strong>` : label;
+      const equalMarker = markEqualContribution && (label === 'Rongtao Zhang' || label === 'Xin Zhu') ? '<sup class="equal-contrib-symbol">*</sup>' : '';
+      const affiliationMarker = markEqualContribution ? '<sup class="author-affiliation-symbol">1</sup>' : '';
+      const marker = `${affiliationMarker}${equalMarker}`;
+      const content = label === 'Rongtao Zhang' ? `<strong class="author-self">${label}</strong>${marker}` : `${label}${marker}`;
       return href ? `<span><a href="${href}">${content}</a></span>` : `<span>${content}</span>`;
     }).join(', ');
+
+    if (markEqualContribution && !authorContainer.parentElement.querySelector('.author-affiliation-note')) {
+      const affiliation = document.createElement('div');
+      affiliation.className = 'equal-contrib-note author-affiliation-note';
+      affiliation.textContent = '1 University of Southern California.';
+      authorContainer.insertAdjacentElement('afterend', affiliation);
+    }
+
+    if (markEqualContribution && !authorContainer.parentElement.querySelector('.equal-contrib-note:not(.author-affiliation-note)')) {
+      const note = document.createElement('div');
+      note.className = 'equal-contrib-note';
+      note.textContent = '* Equal contribution.';
+      const affiliation = authorContainer.parentElement.querySelector('.author-affiliation-note');
+      (affiliation || authorContainer).insertAdjacentElement('afterend', note);
+    }
   }
 
   let publicationValue = null;
