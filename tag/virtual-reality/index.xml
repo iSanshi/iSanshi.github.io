@@ -21,7 +21,7 @@
 &lt;p&gt;This project explores &lt;strong&gt;VR surfing interaction&lt;/strong&gt; with a &lt;strong&gt;VR headset&lt;/strong&gt; and a &lt;strong&gt;motorized mechanical surfboard platform&lt;/strong&gt; designed to simulate the body motion of real surfing. The main goal was to create a more immersive and physically engaging surfing experience by combining virtual-environment feedback with real-time body tracking and motion control.&lt;/p&gt;
 &lt;p&gt;The project was completed in collaboration with &lt;strong&gt;Premankur Banerjee&lt;/strong&gt;, and was advised by &lt;a href=&#34;https://viterbi.usc.edu/directory/faculty/Culbertson/Heather&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Heather Culbertson&lt;/a&gt; and &lt;a href=&#34;https://ampl.usc.edu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Jason Kutch&lt;/a&gt; at &lt;strong&gt;USC&lt;/strong&gt;.&lt;/p&gt;
 &lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
-  &lt;source src=&#34;env.MOV&#34; type=&#34;video/quicktime&#34;&gt;
+  &lt;source src=&#34;env.mp4&#34; type=&#34;video/mp4&#34;&gt;
 &lt;/video&gt;
 &lt;p&gt;&lt;em&gt;Experimental environment for the VR surfing setup.&lt;/em&gt;&lt;/p&gt;
 &lt;h2 id=&#34;system-design-and-results&#34;&gt;&lt;strong&gt;System Design and Results&lt;/strong&gt;&lt;/h2&gt;
@@ -41,7 +41,7 @@
 &lt;/ul&gt;
 &lt;p&gt;More broadly, the project showed how &lt;strong&gt;computer vision&lt;/strong&gt;, &lt;strong&gt;VR interaction&lt;/strong&gt;, and &lt;strong&gt;human-centered control design&lt;/strong&gt; can be combined to create embodied motion experiences beyond standard controller-based interfaces.&lt;/p&gt;
 &lt;video controls preload=&#34;metadata&#34; style=&#34;width:100%;border-radius:16px;margin-top:1rem;&#34;&gt;
-  &lt;source src=&#34;surfing.MOV&#34; type=&#34;video/quicktime&#34;&gt;
+  &lt;source src=&#34;surfing.mp4&#34; type=&#34;video/mp4&#34;&gt;
 &lt;/video&gt;
 &lt;p&gt;&lt;em&gt;VR surfing board system in operation.&lt;/em&gt;&lt;/p&gt;
 </description>
