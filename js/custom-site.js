@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initWeChatModal();
+  initCitationModalFeedback();
   initPublicationPage();
 });
 
@@ -27,6 +28,20 @@ function initWeChatModal() {
     if (event.key === 'Escape' && !modal.hidden) {
       closeModal();
     }
+  });
+}
+
+function initCitationModalFeedback() {
+  document.addEventListener('click', (event) => {
+    const copyButton = event.target.closest('.js-copy-cite');
+    if (!copyButton) return;
+
+    const originalText = copyButton.dataset.originalText || copyButton.innerHTML;
+    copyButton.dataset.originalText = originalText;
+    copyButton.innerHTML = '<i class="fas fa-check"></i> Copied';
+    window.setTimeout(() => {
+      copyButton.innerHTML = copyButton.dataset.originalText || originalText;
+    }, 1600);
   });
 }
 

@@ -516,6 +516,158 @@ body.wechat-modal-open {
   background: rgba(123, 30, 43, 0.14);
 }
 
+.modal-backdrop.show {
+  background: rgba(43, 24, 27, 0.58);
+  backdrop-filter: blur(8px);
+  opacity: 1;
+}
+
+.citation-modal .modal-dialog {
+  max-width: min(760px, calc(100vw - 2rem));
+  margin: 8vh auto 0;
+}
+
+.citation-modal__content {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(123, 30, 43, 0.12);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 252, 248, 0.99) 0%, rgba(249, 242, 235, 0.99) 100%);
+  box-shadow: 0 28px 70px rgba(50, 25, 28, 0.28);
+}
+
+.citation-modal__header {
+  display: block;
+  padding: 1.45rem 1.55rem 0.85rem;
+  border-bottom: 0;
+  text-align: center;
+}
+
+.citation-modal__badge {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(141, 36, 50, 0.08);
+  color: var(--site-accent-deep);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.citation-modal__title {
+  margin: 0;
+  color: var(--site-ink) !important;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.citation-modal__caption {
+  margin: 0.45rem 0 0;
+  color: var(--site-muted);
+  font-size: 0.95rem;
+}
+
+.citation-modal__body {
+  padding: 0.25rem 1.55rem 1rem;
+}
+
+.citation-modal__code {
+  max-height: min(48vh, 420px);
+  margin: 0;
+  padding: 1rem 1.05rem;
+  overflow: auto;
+  border: 1px solid rgba(123, 30, 43, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 248, 241, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  color: #352722;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace !important;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.citation-modal__code code {
+  color: inherit;
+  font: inherit;
+  white-space: pre;
+}
+
+.citation-modal__footer {
+  gap: 0.55rem;
+  justify-content: center;
+  padding: 0 1.55rem 1.35rem;
+  border-top: 0;
+}
+
+.citation-modal__action {
+  min-width: 8.4rem;
+  border-radius: 999px !important;
+  font-weight: 700;
+}
+
+.citation-modal__action--primary {
+  background: var(--site-accent) !important;
+  color: #fff !important;
+}
+
+.citation-modal__action--primary:hover,
+.citation-modal__action--primary:focus {
+  background: var(--site-accent-deep) !important;
+  color: #fff !important;
+}
+
+.citation-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.8rem;
+  z-index: 2;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(123, 30, 43, 0.08);
+  color: var(--site-accent-deep);
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.citation-modal__close:hover,
+.citation-modal__close:focus {
+  background: rgba(123, 30, 43, 0.14);
+}
+
+#modal-error {
+  width: 100%;
+  color: var(--site-accent-deep);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@media (max-width: 575.98px) {
+  .citation-modal .modal-dialog {
+    margin-top: 4vh;
+  }
+
+  .citation-modal__header,
+  .citation-modal__body,
+  .citation-modal__footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .citation-modal__code {
+    font-size: 0.74rem;
+  }
+
+  .citation-modal__action {
+    width: 100%;
+  }
+}
+
 .view-showcase-publication .article-style,
 .view-showcase-publication .article-style p {
   margin-top: 0.3rem;

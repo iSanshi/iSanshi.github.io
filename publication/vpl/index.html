@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Last Published: April 20, 2026 --><html lang="en-us" >
+<!-- Last Published: June 9, 2026 --><html lang="en-us" >
 
 
 <head>
@@ -662,8 +662,10 @@
   
 
 
+
 <div class="article-metadata">
 
+  
   
   
   
@@ -671,8 +673,11 @@
   <div>
     <span ><a href="/"><strong class="author-self">Rongtao Zhang</strong><sup class="author-affiliation-symbol">1</sup><sup class="equal-contrib-symbol">*</sup></a></span>, <span ><a href="https://xinzhu.us" target="_blank" rel="noopener">Xin Zhu<sup class="author-affiliation-symbol">1</sup><sup class="equal-contrib-symbol">*</sup></a></span>, <span >Masoume Pourebadi Khotbehsara<sup class="author-affiliation-symbol">1</sup></span>, <span >Warren Dao<sup class="author-affiliation-symbol">1</sup></span>, <span ><a href="https://ebiyik.github.io/" target="_blank" rel="noopener">Erdem Biyik<sup class="author-affiliation-symbol">1</sup></a></span>, <span ><a href="https://sites.usc.edu/culbertson/" target="_blank" rel="noopener">Heather Culbertson<sup class="author-affiliation-symbol">1</sup></a></span>
   </div>
+  
+  
   <div class="equal-contrib-note author-affiliation-note">1 University of Southern California.</div>
   <div class="equal-contrib-note">* Equal contribution.</div>
+  
   
   
 
@@ -716,26 +721,13 @@
 
 
 
-  
-    
-  
-
-
-
-<a class="btn btn-outline-primary btn-page-header" href="https://arxiv.org/abs/2604.20210" target="_blank" rel="noopener">
-  <i class="ai ai-arxiv"></i> arXiv
-</a>
-
-
-
 
   
-  
-    
-  
-<a class="btn btn-outline-primary btn-page-header" href="https://github.com/HaRVI-Lab/vibrotactile-preference-learning" target="_blank" rel="noopener">
-  <i class="fab fa-github"></i> Code
-</a>
+
+
+
+
+
 
 
 
@@ -752,6 +744,61 @@
 
 
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary btn-page-header" href="https://arxiv.org/abs/2604.20210" target="_blank" rel="noopener">
+    <i class="ai ai-arxiv"></i> arXiv
+  </a>
+  
+
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary btn-page-header" href="https://github.com/HaRVI-Lab/vibrotactile-preference-learning" target="_blank" rel="noopener">
+    <i class="fab fa-github"></i> Code
+  </a>
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary btn-page-header" href="https://doi.acm.org?doi=3774935.3806784" target="_blank" rel="noopener">
+    <i class="ai ai-acm"></i> ACM
+  </a>
+  
+
+
+  
+  <a href="#" class="btn btn-outline-primary btn-page-header js-cite-modal"
+          data-filename="/publication/vpl/cite.bib">
+    <i class="fas fa-quote-right"></i> Cite
+  </a>
+  
 
 
 </div>
@@ -933,6 +980,21 @@
     <li>
       <a href="https://github.com/iSanshi" target="_blank" rel="noopener">
         <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=K6wmOHQAAAAJ" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
       </a>
     </li>
   
@@ -1179,24 +1241,26 @@
 
 
   
-<div id="modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Cite</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div id="modal" class="modal fade citation-modal" role="dialog" aria-labelledby="citation-modal-title" aria-hidden="true">
+  <div class="modal-dialog citation-modal__dialog">
+    <div class="modal-content citation-modal__content">
+      <button type="button" class="citation-modal__close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="modal-header citation-modal__header">
+        <div class="citation-modal__badge">BibTeX</div>
+        <h5 class="modal-title citation-modal__title" id="citation-modal-title">Cite</h5>
+        <p class="citation-modal__caption">Copy the citation for this publication.</p>
       </div>
-      <div class="modal-body">
+      <div class="modal-body citation-modal__body">
         
-        <pre><code></code></pre>
+        <pre class="citation-modal__code"><code></code></pre>
       </div>
-      <div class="modal-footer">
-        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+      <div class="modal-footer citation-modal__footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite citation-modal__action citation-modal__action--primary" href="#" target="_blank">
           <i class="fas fa-copy"></i> Copy
         </a>
-        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+        <a class="btn btn-outline-primary my-1 js-download-cite citation-modal__action" href="#" target="_blank">
           <i class="fas fa-download"></i> Download
         </a>
         <div id="modal-error"></div>
