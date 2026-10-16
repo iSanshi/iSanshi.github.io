@@ -58,7 +58,7 @@
       <pubDate>Thu, 03 Jul 2025 00:00:00 +0000</pubDate>
       <guid>https://isanshi.github.io/post/resource/</guid>
       <description>&lt;p&gt;This is a growing list of resources and tools that have been helpful to me.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://wowchemy.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;
 
 
 
@@ -76,7 +76,7 @@
 
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;The template is mobile first with a responsive design to ensure that your site looks stunning on every device.&#34; srcset=&#34;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;A.&#34; srcset=&#34;
                /post/resource/featured_hu5a9aff57e1fb0e29072a5f201bf52787_4013125_6abcc6c2392ae9794d33090ef2c6cb49.webp 400w,
                /post/resource/featured_hu5a9aff57e1fb0e29072a5f201bf52787_4013125_72d8e537ad84106fba5fd4ceb91690a6.webp 760w,
                /post/resource/featured_hu5a9aff57e1fb0e29072a5f201bf52787_4013125_1200x1200_fit_q100_h2_lanczos.webp 1200w&#34;
@@ -89,8 +89,13 @@
 &lt;h3 id=&#34;websites-template&#34;&gt;Websites Template&lt;/h3&gt;
 &lt;p&gt;I built my homepage based on these tools:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://hugoblox.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Hugo Blox&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/HugoBlox/theme-academic-cv&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Hugo Academic&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://hugoblox.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Hugo Blox&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/HugoBlox/theme-academic-cv&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Hugo Academic&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;July 2026 Update: Nowadays, tools like &lt;strong&gt;Codex&lt;/strong&gt; and &lt;strong&gt;Claude Code&lt;/strong&gt; are undoubtedly better ways to build your personal website—all you really need is a little creativity.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;My design is inspired by:&lt;/p&gt;
 &lt;ul&gt;
